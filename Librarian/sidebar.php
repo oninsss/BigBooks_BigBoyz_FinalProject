@@ -1,9 +1,3 @@
-<?php
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-?>
-
 <style>
 .sidebar {
     position: sticky;
@@ -18,6 +12,7 @@ if (session_status() == PHP_SESSION_NONE) {
     align-items: center;
     gap: 72px;
     transition: all 0.3s ease;
+    overflow-x: hidden;
     overflow-y: auto;
 }
 
@@ -39,29 +34,48 @@ if (session_status() == PHP_SESSION_NONE) {
 .sidebar .nav ul {
     display: flex;
     flex-direction: column;
-    gap: 48px;
+    gap: 18px;
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-.sidebar .nav ul li {
+.sidebar .nav ul a {
     width: 100%;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+
+    }
 }
 
-.sidebar .nav ul li a {
+.sidebar .nav ul a li {
+    width: 100%;
     display: flex;
     align-items: center;
     gap: 16px;
-    text-decoration: none;
     color: #333;
     font-size: 1rem;
     font-weight: 500;
     transition: all 0.3s ease;
+    padding: 12px 24px;
 }
 
-.sidebar .nav ul li a .icon-text {
+.sidebar .nav ul a li .icon-text {
     display: inline;
+}
+
+.active-link {
+    background-color: #333;
+    border-radius: 8px;
+
+    span {
+        color: #F3F2ED;
+    }
+
 }
 
 @media (max-width: 768px) {
@@ -81,39 +95,39 @@ if (session_status() == PHP_SESSION_NONE) {
     </a>
 
     <nav class="nav">
-        <ul>
-            <li class="nav-item">
-                <a href="index.php?page=viewBooks">
+        <ul>     
+            <a href="index.php?page=viewBooks">
+                <li class="nav-item <?php echo ($_GET['page'] == 'viewBooks') ? 'active-link' : ''; ?>">
                     <span class="material-symbols-outlined">
                         library_books
                     </span>
                     <span class="icon-text">View Books</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="index.php?page=viewUsers">
+                </li>
+            </a>        
+            <a href="index.php?page=viewUsers">
+                <li class="nav-item <?php echo ($_GET['page'] == 'viewUsers') ? 'active-link' : ''; ?>">
                     <span class="material-symbols-outlined">
                         person
                     </span>
                     <span class="icon-text">View Users</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="index.php?page=history">
+                </li>
+            </a>       
+            <a href="index.php?page=history">
+                <li class="nav-item <?php echo ($_GET['page'] == 'history') ? 'active-link' : ''; ?>">
                     <span class="material-symbols-outlined">
                         history
                     </span>
                     <span class="icon-text">View History</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="logout.php">
+                </li>
+            </a>   
+            <a href="logout.php">
+                <li class="nav-item">
                     <span class="material-symbols-outlined">
                         logout
                     </span>
                     <span class="icon-text">Logout</span>
-                </a>
-            </li>
+                </li>
+            </a>
         </ul>
     </nav>
 </div>

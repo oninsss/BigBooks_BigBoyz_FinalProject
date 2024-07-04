@@ -1,7 +1,7 @@
 <?php
 include "../database.php";
 
-$books = "SELECT * FROM books";
+$users = "SELECT * FROM users";
 ?>
 
 <style>
@@ -112,53 +112,40 @@ th:last-child {
 </style>
 
 <div class="table-wrapper">
-
-<div class="header">
-    <div class="titleBar">
-        <h1>View Books</h1>
-    </div>
-    <div class="bottom">
-        <div class="inner-nav">
-            <ul>
-                <li><a href="index.php?page=viewBooks&subPage=allBooks">All Books</a></li>
-                <li><a href="index.php?page=viewBooks&subPage=availableBooks">Available</a></li>
-                <li><a href="index.php?page=viewBooks&subPage=reservedBooks">Reserved</a></li>
-            </ul>
+    <div class="header">
+        <div class="titleBar">
+            <h1>View Users</h1>
         </div>
-        <div class="btnGrp">
-            <button>Add Book</button>
+        <div class="bottom">
+            <div class="inner-nav">
+                <ul>
+                    <li><a href="index.php?page=viewUsers&subPage=allUsers">All Users</a></li>
+                </ul>
+            </div>
         </div>
     </div>
-</div>
 
-<table class="book-list">
-    <tr id="_header">
-        <th>Book ID</th>
-        <th>Title</th>
-        <th>Author</th>
-        <th>Category</th>
-        <th>Status</th>
-        <th>Stock</th>
-        <th>More</th>
-    </tr>
+    <table class="book-list">
+        <tr id="_header">
+            <th>User ID</th>
+            <th>Last Name</th>
+            <th>First Name</th>
+            <th>Contact no.</th>
+            <th>Email</th>
+            <th>More</th>
+        </tr>
 
-    <?php
-    switch ($subPage) {
-        case 'allBooks':
-            include 'ViewBooks/allBooks.php'; 
-            break;
-        case 'availableBooks':
-            include 'ViewBooks/availBooks.php'; 
-            break;
-        case 'reservedBooks':
-            include 'ViewBooks/reservedBooks.php'; 
-            break;
-        default:
-            echo '<tr><td colspan="7">Select a category to view books.</td></tr>';
-            break;
-    }
-    ?> 
-</table>
+        <?php
+        $subPage = isset($_GET['subPage']) ? filter_input(INPUT_GET, 'subPage', FILTER_SANITIZE_STRING) : '';
 
-
+        switch ($subPage) {
+            case 'allUsers':
+                include 'ViewUsers/allUsers.php'; 
+                break;
+            default:
+                echo '<tr><td colspan="6">No users to view.</td></tr>';
+                break;
+        }
+        ?> 
+    </table>
 </div>
