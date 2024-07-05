@@ -102,63 +102,94 @@ th:last-child {
     color: green;
 }
 
-.status-reserved {
+.status-unavail {
     color: red;
 }
 
 .status-archived {
     color: blue;
 }
+
+.active-subPage {
+    color: #333;
+    font-weight: 500;
+    border-bottom: 2px solid #333;
+}
+
+.moreBtn {
+    width: 40px;
+    height: 40px;
+    background-color: transparent;
+    border: none;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    
+    &:hover {
+        background-color: #EEE;
+        transform: scale(1.1);
+    }
+}
 </style>
 
 <div class="table-wrapper">
-
-<div class="header">
-    <div class="titleBar">
-        <h1>View Books</h1>
-    </div>
-    <div class="bottom">
-        <div class="inner-nav">
-            <ul>
-                <li><a href="index.php?page=viewBooks&subPage=allBooks">All Books</a></li>
-                <li><a href="index.php?page=viewBooks&subPage=availableBooks">Available</a></li>
-                <li><a href="index.php?page=viewBooks&subPage=reservedBooks">Reserved</a></li>
-            </ul>
+    <div class="header">
+        <div class="titleBar">
+            <h1>View Books</h1>
         </div>
-        <div class="btnGrp">
-            <button>Add Book</button>
+        <div class="bottom">
+            <div class="inner-nav">
+                <ul>
+                    <li class="<?php echo (isset($_GET['subPage']) && $_GET['subPage'] == 'allBooks') ? 'active-subPage' : ''; ?>">
+                        <a href="index.php?page=viewBooks&subPage=allBooks">All Books</a>
+                    </li>
+                    <li class="<?php echo (isset($_GET['subPage']) && $_GET['subPage'] == 'availableBooks') ? 'active-subPage' : ''; ?>">
+                        <a href="index.php?page=viewBooks&subPage=availableBooks">Available</a>
+                    </li>
+                    <li class="<?php echo (isset($_GET['subPage']) && $_GET['subPage'] == 'reservedBooks') ? 'active-subPage' : ''; ?>">
+                        <a href="index.php?page=viewBooks&subPage=reservedBooks">Reserved</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="btnGrp">
+                <button>Add Book</button>
+            </div>
         </div>
     </div>
-</div>
 
-<table class="book-list">
-    <tr id="_header">
-        <th>Book ID</th>
-        <th>Title</th>
-        <th>Author</th>
-        <th>Category</th>
-        <th>Status</th>
-        <th>Stock</th>
-        <th>More</th>
-    </tr>
+    <table class="book-list">
+        <tr id="_header">
+            <th>Book ID</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Category</th>
+            <th>Status</th>
+            <th>Stock</th>
+            <th>More</th>
+        </tr>
 
-    <?php
-    switch ($subPage) {
-        case 'allBooks':
-            include 'ViewBooks/allBooks.php'; 
-            break;
-        case 'availableBooks':
-            include 'ViewBooks/availBooks.php'; 
-            break;
-        case 'reservedBooks':
-            include 'ViewBooks/reservedBooks.php'; 
-            break;
-        default:
-            echo '<tr><td colspan="7">Select a category to view books.</td></tr>';
-            break;
-    }
-    ?> 
-</table>
+        <?php
+        switch ($subPage) {
+            case 'allBooks':
+                include 'ViewBooks/allBooks.php'; 
+                break;
+            case 'availableBooks':
+                include 'ViewBooks/availBooks.php'; 
+                break;
+            case 'reservedBooks':
+                include 'ViewBooks/reservedBooks.php'; 
+                break;
+            default:
+                echo '<tr><td colspan="7">Select a category to view books.</td></tr>';
+                break;
+        }
+        ?> 
+    </table>
 
 
 </div>

@@ -1,7 +1,6 @@
 <?php
-include "../database.php";
-
-$users = "SELECT * FROM users";
+    include "../database.php";
+    $users = "SELECT * FROM users";
 ?>
 
 <style>
@@ -109,6 +108,12 @@ th:last-child {
 .status-archived {
     color: blue;
 }
+
+.active-subPage {
+    color: #333;
+    font-weight: 500;
+    border-bottom: 2px solid #333;
+}
 </style>
 
 <div class="table-wrapper">
@@ -119,7 +124,9 @@ th:last-child {
         <div class="bottom">
             <div class="inner-nav">
                 <ul>
-                    <li><a href="index.php?page=viewUsers&subPage=allUsers">All Users</a></li>
+                    <li class="<?php echo (isset($_GET['subPage']) && $_GET['subPage'] == 'allUsers') ? 'active-subPage' : ''; ?>">
+                        <a href="index.php?page=viewUsers&subPage=allUsers">All Users</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -136,8 +143,6 @@ th:last-child {
         </tr>
 
         <?php
-        $subPage = isset($_GET['subPage']) ? filter_input(INPUT_GET, 'subPage', FILTER_SANITIZE_STRING) : '';
-
         switch ($subPage) {
             case 'allUsers':
                 include 'ViewUsers/allUsers.php'; 

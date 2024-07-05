@@ -59,7 +59,7 @@ h1 {
             <span class="material-symbols-outlined">menu</span>
         </button>
 
-        <h1>Lorem Ipsum</h1>
+        <h1>Librarian Dashboard</h1>
 
         <div class="profileBx">
             <!-- <img src="../Assets/Images/user.png" alt="Profile Picture">

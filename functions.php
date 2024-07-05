@@ -28,8 +28,9 @@ Account (Student)
 */
 include("database.php");
 
-function format_Id($name, $publish_date, $category, $count, $added_date) {
-    $id = substr($name, 0, 2)                                               # First 2 letters from the Book Title
+# Book Stuff
+function format_BookId($title, $publish_date, $category, $count, $added_date) {
+    $id = substr($title, 0, 2)                                              # First 2 letters from the Book Title
         . strtoupper(date('M', strtotime($publish_date)))                   # Month (published)
         . date('d', strtotime($added_date))                                 # Day (added to the system)
         . date('Y', strtotime($publish_date))                               # Year (published)
@@ -40,15 +41,16 @@ function format_Id($name, $publish_date, $category, $count, $added_date) {
     return $id;
 }
 
-function addBook($name, $author, $category, $status, $stock, $publish_date, $added_date) {
+function addBook($title, $author, $publish_date, $category, $synopsis, $status, $stock, $image, $added_date) {
     global $conn;
     $count = 0;
     $query = "SELECT * FROM books";
     $result = mysqli_query($conn, $query);
     $count = mysqli_num_rows($result);
     $count++;
-    $book_id = format_Id($name, $publish_date, $category, $count, $added_date);
-    $query = "INSERT INTO books (book_id, title, author, category, status, stock, publish_date, added_date) VALUES ('$book_id', '$name', '$author', '$category', '$status', '$stock', '$publish_date', '$added_date')";
+    $book_id = format_BookId($title, $publish_date, $category, $count, $added_date);
+    $query = "INSERT INTO books (book_id, title, author, publish_date, category, synopsis, status, stock, image) 
+              VALUES ('$book_id', '$title', '$author', '$publish_date', '$category', '$synopsis', '$status', '$stock', '$image')";
     $result = mysqli_query($conn, $query);
     if ($result) {
         return true;
@@ -88,6 +90,17 @@ function deleteBook($id) {
     } else {
         return false;
     }
+}
+
+# Account Stuff
+function format_librarianId() { 
+    global $conn;
+    $query = "SELECT * FROM users WHERE user_id LIKE 'LIB%'";
+    $result = mysqli_query($conn, $query);
+    $count = mysqli_num_rows($result);
+    $count++;
+    $librarian_id = "LIB" . str_pad($count, 5, "0", STR_PAD_LEFT);
+    return $librarian_id;
 }
 
 ?>

@@ -42,18 +42,16 @@
         <div class="main-content">
             <?php include 'header.php'; ?>
             <?php
-            // Set $page based on the URL parameter or default to 'home'
             $page = $_GET['page'] ?? 'home';
 
-            // Include different views based on $page
             switch ($page) {
                 case 'viewBooks':
-                    // Check for subPage parameter
-                    $subPage = $_GET['subPage'] ?? 'allBooks'; // Default to allBooks if not specified
-                    include "viewBooks.php"; // Include the viewBooks.php file
+                    $subPage = $_GET['subPage'] ?? 'allBooks'; 
+                    include "viewBooks.php"; 
                     break;
                 case 'viewUsers':
-                    include 'viewUsers.php'; // You can include other views similarly
+                    $subPage = $_GET['subPage'] ?? 'allUsers'; 
+                    include 'viewUsers.php';
                     break;
                 default:
                     echo '<div class="alert alert-info">Select a page to view.</div>';

@@ -68,7 +68,7 @@
     display: inline;
 }
 
-.active-link {
+.active-page {
     background-color: #333;
     border-radius: 8px;
 
@@ -80,7 +80,7 @@
 
 @media (max-width: 768px) {
     .sidebar {
-        display: none;
+        width: 0;
     }
 
     .toggle-sidebar-btn {
@@ -97,7 +97,7 @@
     <nav class="nav">
         <ul>     
             <a href="index.php?page=viewBooks">
-                <li class="nav-item <?php echo ($_GET['page'] == 'viewBooks') ? 'active-link' : ''; ?>">
+                <li class="nav-item <?php echo ($_GET['page'] == 'viewBooks') ? 'active-page' : ''; ?>">
                     <span class="material-symbols-outlined">
                         library_books
                     </span>
@@ -105,7 +105,7 @@
                 </li>
             </a>        
             <a href="index.php?page=viewUsers">
-                <li class="nav-item <?php echo ($_GET['page'] == 'viewUsers') ? 'active-link' : ''; ?>">
+                <li class="nav-item <?php echo ($_GET['page'] == 'viewUsers') ? 'active-page' : ''; ?>">
                     <span class="material-symbols-outlined">
                         person
                     </span>
@@ -113,7 +113,7 @@
                 </li>
             </a>       
             <a href="index.php?page=history">
-                <li class="nav-item <?php echo ($_GET['page'] == 'history') ? 'active-link' : ''; ?>">
+                <li class="nav-item <?php echo ($_GET['page'] == 'history') ? 'active-page' : ''; ?>">
                     <span class="material-symbols-outlined">
                         history
                     </span>
