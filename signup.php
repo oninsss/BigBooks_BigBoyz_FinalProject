@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signup</title>
     <link rel="stylesheet" href="Assets/Style/login-signup.css">
+    
 </head>
 <body>
     <div class="container">
