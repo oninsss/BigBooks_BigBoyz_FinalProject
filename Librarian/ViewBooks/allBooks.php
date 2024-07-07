@@ -4,7 +4,6 @@
         echo "<tr>";
             echo "<td>" . $row['book_id'] . "</td>";
             echo "<td>" . $row['title'] . "</td>";
-            echo "<td>" . $row['author'] . "</td>";
             echo "<td>" . $row['category'] . "</td>";
             if ($row['status'] == 'Available') {
                 echo "<td><span class='status-avail'>" . $row['status'] . "</span></td>";

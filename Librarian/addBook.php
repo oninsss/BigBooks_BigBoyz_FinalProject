@@ -94,13 +94,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="form-group">
         <label for="category">Category</label>
         <select name="category" id="_category">
-            <option value="fiction">Fiction</option>
-            <option value="non-fiction">Non-Fiction</option>
-            <option value="reference">Reference</option>
-            <option value="educational">Educational</option>
-            <option value="children">Children</option>
-            <option value="graphic-novel">Graphic Novel</option>
-            <option value="drama">Drama</option>
+            <option value="Fiction">Fiction</option>
+            <option value="Non-Fiction">Non-Fiction</option>
+            <option value="Reference">Reference</option>
+            <option value="Educational">Educational</option>
+            <option value="Children">Children</option>
+            <option value="Graphic Novel">Graphic Novel</option>
+            <option value="Drama">Drama</option>
         </select>
     </div>
     <div class="form-group">

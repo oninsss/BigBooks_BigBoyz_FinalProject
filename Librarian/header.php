@@ -9,7 +9,7 @@
     top: 0;
     background-color: #F3F2ED;
     width: 100%;
-    height: 96px;
+    height: 72px;
     display: flex;
     justify-content: center;
     align-items: center;

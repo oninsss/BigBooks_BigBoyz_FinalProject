@@ -1,0 +1,213 @@
+.table-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}
+
+.header {
+    top: 72px;
+    position: sticky;
+    width: 100%;
+    background-color: #F3F2ED;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+    .titleBar {
+        width: 92%;
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        padding: 18px 0;
+    }
+
+    .bottom {
+        width: 92%;
+        height: 64px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        
+        .inner-nav {
+            width: 40%;
+            min-width: 300px;
+
+            ul {
+                width: 100%;
+                display: flex;
+                gap: 48px;
+                list-style: none;
+
+                li {
+
+                    a {
+                        text-decoration: none;
+                        color: #333;
+                        font-size: 1rem;
+                        font-weight: 500;
+                        transition: all 0.3s ease;
+                    }
+                }
+            }
+        }
+
+        .btnGrp {
+            display: flex;
+            gap: 16px;
+
+            button {
+                padding: 12px 32px;
+                border: none;
+                border-radius: 8px;
+                background-color: #019F5E;
+                color: #F4F4F4;
+                font-size: 1rem;
+                font-weight: 500;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+        }
+    }
+}
+
+.student-list-header,
+.book-list-header {
+    margin-top: 28px;
+}
+
+.student-list,
+.book-list {
+    margin-top: 16px;
+    border-spacing: 0 8px;
+}
+
+.book-list-header, 
+.book-list {
+    width: 92%;
+
+    .book-list-header th:nth-child(1),
+    .book-list th:nth-child(1),
+    .book-list-header th:nth-child(2),
+    .book-list th:nth-child(2) {
+        width: 22%;
+    }
+    
+    .book-list-header th:nth-child(3),
+    .book-list th:nth-child(3),
+    .book-list-header th:nth-child(4),
+    .book-list th:nth-child(4) {
+        width: 15%;
+    }
+    
+    .book-list-header th:nth-child(5),
+    .book-list th:nth-child(5),
+    .book-list-header th:nth-child(6),
+    .book-list th:nth-child(6) {
+        width: 8%;
+    }
+}
+
+.student-list-header, 
+.student-list {
+    width: 92%;
+
+    th:nth-child(1),
+    td:nth-child(1) {
+        width: 15%;
+    }
+
+    th:nth-child(2),
+    td:nth-child(2) {
+        width: 25%;
+    }
+
+    th:nth-child(3),
+    td:nth-child(3) {
+        width: 25%;
+    }
+
+    th:nth-child(4),
+    td:nth-child(4) {
+        width: 20%;
+    }
+
+    th:nth-child(5),
+    td:nth-child(5) {
+        width: 15%;
+    }
+}
+
+.student-list-header th,
+.book-list-header th {
+    white-space: nowrap;
+    background-color: #333;
+    padding: 12px 24px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+    color: #F4F4F4;
+}
+
+.student-list td,
+.book-list td {
+    min-width: 50px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 16px 24px;
+    text-align: left;
+    background-color: #F4F4F4;
+}
+
+th:first-child, 
+td:first-child {
+  border-radius: 14px 0 0 14px;
+}
+
+th:last-child, 
+td:last-child {
+  border-radius: 0 14px 14px 0;
+}
+
+.status-avail {
+    color: #019F5E;
+}
+
+.status-unavail {
+    color: red;
+}
+
+.status-archived {
+    color: #E98947;
+}
+
+.active-subPage {
+    color: #333;
+    font-weight: 500;
+    border-bottom: 2px solid #333;
+}
+
+.moreBtn {
+    width: 40px;
+    height: 40px;
+    background-color: transparent;
+    border: none;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    
+    &:hover {
+        background-color: #EEE;
+        transform: scale(1.1);
+    }
+}

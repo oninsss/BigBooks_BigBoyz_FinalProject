@@ -1,12 +1,12 @@
 <?php
     include "../database.php";
-    $users = "SELECT * FROM users";
+    $users = "SELECT * FROM transactions";
 ?>
 
 <div class="table-wrapper">
     <div class="header">
         <div class="titleBar">
-            <h1>View Users</h1>
+            <h1>View History</h1>
         </div>
         <div class="bottom">
             <div class="inner-nav">
@@ -18,7 +18,7 @@
             </div>
         </div>
 
-        <table class="student-list-header">
+        <table class="history-list-header">
             <tr id="_header">
                 <th>Student ID</th>
                 <th>Last Name</th>
@@ -29,7 +29,7 @@
         </table>
     </div>
 
-    <table class="student-list">
+    <table class="history-list">
         <?php
         switch ($subPage) {
             case 'allUsers':

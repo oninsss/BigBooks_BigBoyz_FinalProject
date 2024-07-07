@@ -1,94 +1,3 @@
-<style>
-.sidebar {
-    position: sticky;
-    top: 0;
-    left: 0;
-    background-color: #F3F2ED;
-    width: 240px;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: center;
-    gap: 72px;
-    transition: all 0.3s ease;
-    overflow-x: hidden;
-    overflow-y: auto;
-}
-
-.sidebar > a {
-    margin-top: 32px;
-}
-
-.sidebar > a img {
-    height: 50px;
-}
-
-.sidebar .nav {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.sidebar .nav ul {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.sidebar .nav ul a {
-    width: 100%;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    text-decoration: none;
-
-    &:hover {
-        background-color: rgba(0, 0, 0, 0.1);
-
-    }
-}
-
-.sidebar .nav ul a li {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    color: #333;
-    font-size: 1rem;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    padding: 12px 24px;
-}
-
-.sidebar .nav ul a li .icon-text {
-    display: inline;
-}
-
-.active-page {
-    background-color: #333;
-    border-radius: 8px;
-
-    span {
-        color: #F3F2ED;
-    }
-
-}
-
-@media (max-width: 768px) {
-    .sidebar {
-        width: 0;
-    }
-
-    .toggle-sidebar-btn {
-        display: block;
-    }
-}
-</style>
-
 <div id="_sidebar" class="sidebar">
     <a href="index.php" class="logo">
         <img src="../Assets/Images/library-logo.png" alt="Logo">
@@ -101,7 +10,7 @@
                     <span class="material-symbols-outlined">
                         library_books
                     </span>
-                    <span class="icon-text">View Books</span>
+                    <span class="icon-text">Books</span>
                 </li>
             </a>        
             <a href="index.php?page=viewUsers">
@@ -109,7 +18,7 @@
                     <span class="material-symbols-outlined">
                         person
                     </span>
-                    <span class="icon-text">View Users</span>
+                    <span class="icon-text">Students</span>
                 </li>
             </a>       
             <a href="index.php?page=history">
