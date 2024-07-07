@@ -203,8 +203,17 @@
                 <label for="categorySelect" class="visually-hidden">Select a category:</label>
                 <select class="form-select" id="categorySelect" name="category" onchange="this.form.submit()">
                     <option value="">Select a category</option>
-                    <option value="Fiction" <?php if (isset($category) && $category === 'Fiction') echo 'selected'; ?>>Fiction</option>
-                    <option value="Non-Fiction" <?php if (isset($category) && $category === 'Non-Fiction') echo 'selected'; ?>>Non-Fiction</option>
+                    <option value="All" <?php if (isset($_GET['category']) && $_GET['category'] === 'All') echo 'selected'; ?>>All</option>
+                    <option value="Fiction" <?php if (isset($_GET['category']) && $_GET['category'] === 'Fiction') echo 'selected'; ?>>Fiction</option>
+                    <option value="Science Fiction" <?php if (isset($_GET['category']) && $_GET['category'] === 'Science Fiction') echo 'selected'; ?>>Science Fiction</option>
+                    <option value="Fantasy" <?php if (isset($_GET['category']) && $_GET['category'] === 'Fantasy') echo 'selected'; ?>>Fantasy</option>
+                    <option value="Mystery" <?php if (isset($_GET['category']) && $_GET['category'] === 'Mystery') echo 'selected'; ?>>Mystery</option>
+                    <option value="Horror" <?php if (isset($_GET['category']) && $_GET['category'] === 'Horror') echo 'selected'; ?>>Horror</option>
+                    <option value="Romance" <?php if (isset($_GET['category']) && $_GET['category'] === 'Romance') echo 'selected'; ?>>Romance</option>
+                    <option value="Dystopian" <?php if (isset($_GET['category']) && $_GET['category'] === 'Dystopian') echo 'selected'; ?>>Dystopian</option>
+                    <option value="Adventure" <?php if (isset($_GET['category']) && $_GET['category'] === 'Adventure') echo 'selected'; ?>>Adventure</option>
+                    <option value="Historical" <?php if (isset($_GET['category']) && $_GET['category'] === 'Historical') echo 'selected'; ?>>Historical</option>
+                    <option value="Non-Fiction" <?php if (isset($_GET['category']) && $_GET['category'] === 'Non-Fiction') echo 'selected'; ?>>Non-Fiction</option>
                 </select>
             </form>
         </div>
@@ -238,6 +247,10 @@
                 $search_query = isset($_GET['search']) ? $_GET['search'] : '';
                 $category = isset($_GET['category']) ? $_GET['category'] : '';
 
+                if ($category === 'All') {
+                    $category = '';
+                }
+
                 // Total rows 
                 $total_records_per_page = 5;
                 $offset = ($page_no - 1) * $total_records_per_page;
@@ -247,6 +260,7 @@
 
                 // Construct base SQL query
                 $sql = "SELECT * FROM bigbooks.books";
+                $result_count_sql = "SELECT COUNT(*) as total_records FROM bigbooks.books";
 
                 // Adjust SQL query based on search and category filters
                 $where_clause = [];
@@ -266,9 +280,18 @@
                 // Combine WHERE conditions if needed
                 if (!empty($where_clause)) {
                     $sql .= " WHERE " . implode(" AND ", $where_clause);
+                    $result_count_sql . " WHERE " . implode(" AND ", $where_clause);
                 }
 
                 $sql .= " LIMIT $offset, $total_records_per_page";
+
+
+                // Get total number of pages
+                $result_count = $conn->query($result_count_sql);
+                $records = $result_count->fetch_assoc();
+                $total_records = $records['total_records'];
+
+                $total_no_of_pages = ceil($total_records / $total_records_per_page);
 
                 // Prepare and execute the query
                 $stmt = $conn->prepare($sql);
@@ -283,6 +306,8 @@
                     
                     // Get results
                     $result = $stmt->get_result();
+
+                    
                     
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
@@ -313,7 +338,28 @@
 
                 $conn->close();
                 ?>
-
+                
+            </div>
+            <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li class="page-item <?php if ($page_no <= 1) echo 'disabled'; ?>">
+                            <a class="page-link" <?php if ($page_no > 1) echo 'href="?page=viewBooks&page_no=' . $previous_page . '&search=' . $search_query . '"'; ?>>Previous</a>
+                        </li>
+                        <?php for ($i = 1; $i <= $total_no_of_pages; $i++) : ?>
+                            <li class="page-item <?php if ($page_no == $i) echo 'active'; ?>">
+                                <a class="page-link" href="?page=viewBooks&page_no=<?php echo $i; ?>&search=<?php echo $search_query; ?>&category=<?php echo 'category=' . $category?> "><?php echo $i; ?></a>
+                            </li>
+                        <?php endfor; ?>
+                        <li class="page-item <?php if ($page_no >= $total_no_of_pages) echo 'disabled'; ?>">
+                            <a class="page-link" <?php if ($page_no < $total_no_of_pages) echo 'href="?page=viewBooks&page_no=' . $next_page . '&search=' . $search_query . '"'; ?>>Next</a>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="p-10">
+                    <strong>Page <?php echo $page_no; ?> of <?php echo $total_no_of_pages; ?></strong>
+                </div>
+        </div>
+    </div>
     <script>
         document.getElementById('searchBar').addEventListener('submit', function(event) {
             console.log('Form submitted');
