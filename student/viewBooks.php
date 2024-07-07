@@ -199,7 +199,7 @@
             <form id="categoryForm" method="get" action="index.php">
                 <input type="hidden" name="page" value="viewBooks">
                 <input type="hidden" name="page_no" value="1">
-                <input type="hidden" name="search" value="<?php echo isset($search_query) ? urlencode($search_query) : ''; ?>">
+                <input type="hidden" name="search" value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
                 <label for="categorySelect" class="visually-hidden">Select a category:</label>
                 <select class="form-select" id="categorySelect" name="category" onchange="this.form.submit()">
                     <option value="">Select a category</option>
@@ -232,6 +232,11 @@
         </div>
         <div class="contBottomPart">
             <h1>Books</h1> 
+            <?php
+                if (isset($_GET['search'])) {
+                    echo '<h6>Search results for "' . $_GET['search'] . '"</h6>';
+                }
+            ?>
             <div class="books">
             <?php
                 include_once '../database.php';
@@ -240,6 +245,8 @@
                 if ($conn->connect_error) {
                     die("Connection failed: " . $conn->connect_error);
                 }
+
+                
 
                 // Get page and page number
                 $page = isset($_GET['page']) ? $_GET['page'] : '';
@@ -280,14 +287,28 @@
                 // Combine WHERE conditions if needed
                 if (!empty($where_clause)) {
                     $sql .= " WHERE " . implode(" AND ", $where_clause);
-                    $result_count_sql . " WHERE " . implode(" AND ", $where_clause);
+                    $result_count_sql .= " WHERE " . implode(" AND ", $where_clause);
                 }
 
                 $sql .= " LIMIT $offset, $total_records_per_page";
 
 
                 // Get total number of pages
-                $result_count = $conn->query($result_count_sql);
+                $rstmt = $conn->prepare($result_count_sql);
+                if ($rstmt) {
+                    // Bind parameters if any
+                    if (!empty($params)) {
+                        $rstmt->bind_param(str_repeat('s', count($params)), ...$params);
+                    }
+                    
+                    // Execute query
+                    $rstmt->execute();
+                    
+                    // Get results
+                    $result_count = $rstmt->get_result();
+                } else {
+                    echo "Error: " . $conn->error;
+                }
                 $records = $result_count->fetch_assoc();
                 $total_records = $records['total_records'];
 
