@@ -12,6 +12,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stock = mysqli_real_escape_string($conn, $_POST['stock']);  
     $added_date = mysqli_real_escape_string($conn, $_POST['date_added']);
 
+    if ($stock == 0) {
+        $status = 'Unavailable';
+    }
+
     if (editBook($book_id, $name, $author, $category, $status, $stock, $publish_date, $added_date)) {
         header("Location: http://localhost/Projects/BigBooks_BigBoyz_FinalProject/Librarian/index.php?page=viewBooks&subPage=allBooks&message=Book updated successfully.");
         exit;

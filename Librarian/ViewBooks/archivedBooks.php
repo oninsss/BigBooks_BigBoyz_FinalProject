@@ -3,7 +3,7 @@ $result = mysqli_query($conn, $books);
 $foundUnavailableBooks = false;
 
 while ($row = mysqli_fetch_assoc($result)) {
-    if ($row['status'] == 'Available') {
+    if ($row['status'] == 'Archived') {
         $foundUnavailableBooks = true; 
         echo "<tr>";
             echo "<td>" . $row['book_id'] . "</td>";
@@ -28,6 +28,6 @@ while ($row = mysqli_fetch_assoc($result)) {
     } 
 }
 if (!$foundUnavailableBooks) {
-    echo "<br>" . "<br>" . "No Available books to show";
+    echo "<br>" . "<br>" . "No Archived books to show";
 }
 ?>

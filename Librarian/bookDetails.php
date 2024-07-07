@@ -173,17 +173,18 @@
                 <select name="status" id="_status">
                     <option value="Available" <?php if ($book['status'] == 'Available') echo 'selected'; ?>>Available</option>
                     <option value="Archived" <?php if ($book['status'] == 'Archived') echo 'selected'; ?>>Archived</option>
+                    <option value="Unavailable" <?php if($book['status'] == 'Unavailable') echo 'selected'; ?>>Unavailable</option>
                 </select>
             </div>
             <div class="input-group">
                 <div class="form-group">
-                    <label for="stock">Stock</label>
+                    <label>Stock:</label>
                     <input 
                         type="number" 
+                        min="0"
                         name="stock" 
-                        id="_stock" 
-                        class="form-control" 
-                        value="<?php echo $book['stock']; ?>"
+                        id="stock" 
+                        value="<?php echo $book['stock']; ?>" 
                         required>
                 </div>
                 <div class="form-group">
@@ -196,6 +197,19 @@
     </div>
 </div>
 
+<div class="success-modal-bg">
+    <div class="success-modal">
+        <div class="success-modal-content">
+            <div class="modal-body">
+                <p>Book Details edited successfully.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="close-modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
 document.getElementById('_editBtn').addEventListener('click', function() {
     document.querySelector('.edit-modal-bg').style.display = 'flex';
@@ -203,6 +217,17 @@ document.getElementById('_editBtn').addEventListener('click', function() {
 
 document.querySelector('.close-modal').addEventListener('click', function() {
     document.querySelector('.edit-modal-bg').style.display = 'none';
+});
+
+document.getElementById('stock').addEventListener('input', function() {
+    var stock = document.getElementById('stock').value;
+    var status = document.getElementById('status');
+    if (stock == 0) {
+        status.value = 'Unavailable';
+        status.setAttribute('readonly', 'true');
+    } else {
+        status.removeAttribute('readonly');
+    }
 });
 </script>
 </body>

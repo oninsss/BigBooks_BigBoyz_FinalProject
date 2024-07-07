@@ -56,6 +56,10 @@
                     $subPage = $_GET['subPage'] ?? 'allUsers'; 
                     include 'viewUsers.php';
                     break;
+                case 'viewHistory':
+                    $subPage = $_GET['subPage'] ?? 'allHistory'; 
+                    include 'viewHistory.php';
+                    break;
                 default:
                     echo '<div class="alert alert-info">Select a page to view.</div>';
                     break;

@@ -32,5 +32,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     
     addBook($title, $author, $publishDate, $category, $synopsis, $status, $stock, $image, $added_date);
+    
 }
 ?>

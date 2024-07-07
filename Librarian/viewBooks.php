@@ -18,8 +18,11 @@
                     <li class="<?php echo (isset($_GET['subPage']) && $_GET['subPage'] == 'availableBooks') ? 'active-subPage' : ''; ?>">
                         <a href="index.php?page=viewBooks&subPage=availableBooks">Available</a>
                     </li>
-                    <li class="<?php echo (isset($_GET['subPage']) && $_GET['subPage'] == 'reservedBooks') ? 'active-subPage' : ''; ?>">
-                        <a href="index.php?page=viewBooks&subPage=reservedBooks">Reserved</a>
+                    <li class="<?php echo (isset($_GET['subPage']) && $_GET['subPage'] == 'unavailableBooks') ? 'active-subPage' : ''; ?>">
+                        <a href="index.php?page=viewBooks&subPage=unavailableBooks">Unavailable</a>
+                    </li>
+                    <li class="<?php echo (isset($_GET['subPage']) && $_GET['subPage'] == 'archivedBooks') ? 'active-subPage' : ''; ?>">
+                        <a href="index.php?page=viewBooks&subPage=archivedBooks">Archived</a>
                     </li>
                 </ul>
             </div>
@@ -49,8 +52,11 @@
             case 'availableBooks':
                 include 'ViewBooks/availBooks.php'; 
                 break;
-            case 'reservedBooks':
-                include 'ViewBooks/reservedBooks.php'; 
+            case 'unavailableBooks':
+                include 'ViewBooks/unavailBooks.php'; 
+                break;
+            case 'archivedBooks':
+                include 'ViewBooks/archivedBooks.php'; 
                 break;
             default:
                 echo '<tr><td colspan="7">Select a category to view books.</td></tr>';
@@ -143,7 +149,8 @@
                 <div class="form-group">
                     <label for="stock">Stock</label>
                     <input 
-                        type="number" 
+                        type="number"
+                        min="0" 
                         name="stock" 
                         id="_stock" 
                         class="form-control" 
@@ -164,6 +171,19 @@
     </div>
 </div>
 
+<div class="success-modal-bg">
+    <div class="success-modal">
+        <div class="success-modal-content">
+            <div class="modal-body">
+                <p>Book has been added successfully.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="close-modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     document.getElementById('_addBook').addEventListener('click', function() {
         document.querySelector('.addBook-modal-bg').style.display = 'flex';
@@ -172,4 +192,21 @@
     document.querySelector('.close-modal').addEventListener('click', function() {
         document.querySelector('.addBook-modal-bg').style.display = 'none';
     });
+
+    <?php if ($result):
+    echo "
+        showSuccessModal();
+    ";
+    endif; ?>
+
+    function showSuccessModal() {
+        var modal = document.getElementById("success-modal-bg");
+        var span = document.querySelector(".close-modal");
+
+        modal.style.display = "block";
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+    }
 </script>

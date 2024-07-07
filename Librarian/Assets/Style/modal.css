@@ -6,7 +6,8 @@
 
 .details-modal-bg,
 .addBook-modal-bg,
-.edit-modal-bg {
+.edit-modal-bg,
+.success-modal-bg {
     position: fixed;
     top: 0;
     left: 0;
@@ -18,7 +19,8 @@
 
 .details-modal,
 .addBook-modal,
-.edit-modal {
+.edit-modal,
+.success-modal {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -28,6 +30,11 @@
     background-color: #E7E5D9;
     padding: 48px;
     z-index: 1000;
+}
+
+.success-modal {
+    width: 400px;
+    padding: 36px;
 }
 
 .modal-header {

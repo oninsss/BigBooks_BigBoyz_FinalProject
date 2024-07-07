@@ -5,7 +5,7 @@
 
     <nav class="nav">
         <ul>     
-            <a href="index.php?page=viewBooks">
+            <a href="index.php?page=viewBooks&subPage=allBooks">
                 <li class="nav-item <?php echo ($_GET['page'] == 'viewBooks') ? 'active-page' : ''; ?>">
                     <span class="material-symbols-outlined">
                         library_books
@@ -13,7 +13,7 @@
                     <span class="icon-text">Books</span>
                 </li>
             </a>        
-            <a href="index.php?page=viewUsers">
+            <a href="index.php?page=viewUsers&subPage=allUsers">
                 <li class="nav-item <?php echo ($_GET['page'] == 'viewUsers') ? 'active-page' : ''; ?>">
                     <span class="material-symbols-outlined">
                         person
