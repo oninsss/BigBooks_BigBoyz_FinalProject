@@ -29,8 +29,13 @@ Account (Student)
 include("database.php");
 
 # Book Stuff
-function format_BookId($title, $publish_date, $category, $count, $added_date) {
-    $id = substr($title, 0, 2)                                              # First 2 letters from the Book Title
+function format_BookId(
+                    $title, 
+                    $publish_date, 
+                    $category, 
+                    $count, 
+                    $added_date) {
+    $id = strtoupper(substr($title, 0, 2))                                            # First 2 letters from the Book Title
         . strtoupper(date('M', strtotime($publish_date)))                   # Month (published)
         . date('d', strtotime($added_date))                                 # Day (added to the system)
         . date('Y', strtotime($publish_date))                               # Year (published)
@@ -41,7 +46,16 @@ function format_BookId($title, $publish_date, $category, $count, $added_date) {
     return $id;
 }
 
-function addBook($title, $author, $publish_date, $category, $synopsis, $status, $stock, $image, $added_date) {
+function addBook(
+                $title, 
+                $author, 
+                $publish_date, 
+                $category, 
+                $synopsis, 
+                $status, 
+                $stock, 
+                $image, 
+                $added_date) {
     global $conn;
     $count = 0;
     $query = "SELECT * FROM books";
@@ -49,8 +63,26 @@ function addBook($title, $author, $publish_date, $category, $synopsis, $status, 
     $count = mysqli_num_rows($result);
     $count++;
     $book_id = format_BookId($title, $publish_date, $category, $count, $added_date);
-    $query = "INSERT INTO books (book_id, title, author, publish_date, category, synopsis, status, stock, image) 
-              VALUES ('$book_id', '$title', '$author', '$publish_date', '$category', '$synopsis', '$status', '$stock', '$image')";
+    $query = "INSERT INTO books (
+                                book_id, 
+                                title, 
+                                author, 
+                                publish_date, 
+                                category, 
+                                synopsis, 
+                                status, 
+                                stock, 
+                                image) 
+              VALUES (
+                    '$book_id', 
+                    '$title', 
+                    '$author', 
+                    '$publish_date', 
+                    '$category', 
+                    '$synopsis', 
+                    '$status', 
+                    '$stock', 
+                    '$image')";
     $result = mysqli_query($conn, $query);
     if ($result) {
         return true;
@@ -59,9 +91,23 @@ function addBook($title, $author, $publish_date, $category, $synopsis, $status, 
     }
 }
 
-function editBook($id, $name, $author, $category, $status, $stock, $publish_date, $added_date) {
+function editBook(
+                $id, 
+                $name, 
+                $author, 
+                $category, 
+                $status, 
+                $stock, 
+                $publish_date ) {
     global $conn;
-    $query = "UPDATE books SET title = '$name', author = '$author', category = '$category', status = '$status', stock = '$stock', publish_date = '$publish_date', added_date = '$added_date' WHERE book_id = '$id'";
+    $query = "UPDATE books SET 
+                    title = '$name', 
+                    author = '$author', 
+                    category = '$category', 
+                    status = '$status', 
+                    stock = '$stock', 
+                    publish_date = '$publish_date'
+            WHERE book_id = '$id'";
     $result = mysqli_query($conn, $query);
     if ($result) {
         return true;

@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <link rel="stylesheet" href="Assets/Style/sidebar.css" class="css">
     <link rel="stylesheet" href="Assets/Style/view.css" class="css">
+    <link rel="stylesheet" href="Assets/Style/modal.css" class="css">
     <style>
         * {
             margin: 0;
@@ -42,7 +43,7 @@
     <div class="container">  
         <?php include 'sidebar.php'; ?>
         <div class="main-content">
-            <?php include 'header.php'; ?>
+
             <?php
             $page = $_GET['page'] ?? 'home';
 

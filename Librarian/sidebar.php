@@ -29,7 +29,7 @@
                     <span class="icon-text">View History</span>
                 </li>
             </a>   
-            <a href="logout.php">
+            <a href="../logout.php">
                 <li class="nav-item">
                     <span class="material-symbols-outlined">
                         logout

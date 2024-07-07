@@ -16,7 +16,7 @@
 }
 
 .topbar .nav {
-    width: 95%;
+    width: 92%;
     height: 100%;
     display: flex;
     justify-content: space-between;

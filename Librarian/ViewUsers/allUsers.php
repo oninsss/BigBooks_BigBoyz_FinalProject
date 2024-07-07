@@ -7,8 +7,12 @@
             echo "<td>" . $row['first_name'] . "</td>";
             echo "<td>" . $row['email'] . "</td>";
             echo "<td>" . 
-                    '<span class="material-symbols-outlined">arrow_forward_ios</span>' . 
-                 "</td>";
+                '<a href="userDetails.php?user_id=' . $row['user_id'] . '" class="moreBtn">
+                    <span class="material-symbols-outlined">
+                        arrow_forward_ios
+                    </span> 
+                </a>' . 
+            "</td>";
 
         echo "</tr>";
     }

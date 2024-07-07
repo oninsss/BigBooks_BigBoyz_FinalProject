@@ -8,7 +8,7 @@
 }
 
 .header {
-    top: 72px;
+    top: 0;
     position: sticky;
     width: 100%;
     background-color: #F3F2ED;
@@ -23,7 +23,7 @@
         display: flex;
         justify-content: start;
         align-items: center;
-        padding: 18px 0;
+        padding: 32px 0;
     }
 
     .bottom {
@@ -64,12 +64,22 @@
                 padding: 12px 32px;
                 border: none;
                 border-radius: 8px;
-                background-color: #019F5E;
-                color: #F4F4F4;
                 font-size: 1rem;
                 font-weight: 500;
                 cursor: pointer;
                 transition: all 0.3s ease;
+
+                &:hover {
+                    filter: brightness(1.2);
+                }
+                &:active {
+                    transform: scale(0.95);
+                }
+            }
+
+            #_addBook {
+                background-color: #019F5E;
+                color: #F4F4F4;
             }
         }
     }
@@ -90,24 +100,24 @@
 .book-list {
     width: 92%;
 
-    .book-list-header th:nth-child(1),
-    .book-list th:nth-child(1),
-    .book-list-header th:nth-child(2),
-    .book-list th:nth-child(2) {
+    th:nth-child(1),
+    td:nth-child(1),
+    th:nth-child(2),
+    td:nth-child(2) {
         width: 22%;
     }
     
-    .book-list-header th:nth-child(3),
-    .book-list th:nth-child(3),
-    .book-list-header th:nth-child(4),
-    .book-list th:nth-child(4) {
+    th:nth-child(3),
+    td:nth-child(3),
+    th:nth-child(4),
+    td:nth-child(4) {
         width: 15%;
     }
     
-    .book-list-header th:nth-child(5),
-    .book-list th:nth-child(5),
-    .book-list-header th:nth-child(6),
-    .book-list th:nth-child(6) {
+    th:nth-child(5),
+    td:nth-child(5),
+    th:nth-child(6),
+    td:nth-child(6) {
         width: 8%;
     }
 }
@@ -122,10 +132,7 @@
     }
 
     th:nth-child(2),
-    td:nth-child(2) {
-        width: 25%;
-    }
-
+    td:nth-child(2),
     th:nth-child(3),
     td:nth-child(3) {
         width: 25%;
@@ -155,7 +162,6 @@
 
 .student-list td,
 .book-list td {
-    min-width: 50px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
