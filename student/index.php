@@ -14,30 +14,32 @@
             box-sizing: border-box;
         }
         body, html {
-            background-color: #E7E5D9;
+            background-color: #F3F2ED;
             font-family: 'Poppins', sans-serif;
             width: 100%;
             height: 100%;
         }
         .container {
             display: flex;
-            max-width: 1920px;
-            justify-content: flex-start;
+            padding-left: 0;
+            max-width: 2560px;
+            justify-content: start;
             width: 100%;
             min-height: 100vh;
         }
         .main-content {
             display: flex;
             flex-direction: column;
+            align-items: flex-start;
             flex-grow: 1;
             padding: 20px;
             overflow: auto;
             z-index: 1;
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-    <?php include 'header.php';?>
     <div class="container">  
         <?php include 'sidebar.php'; ?>
         <div class="main-content">

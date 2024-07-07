@@ -14,6 +14,7 @@ if (session_status() == PHP_SESSION_NONE) {
     justify-content: center;
     align-items: center;
     z-index: 2;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
 }
 
 .topbar .nav {
@@ -22,6 +23,19 @@ if (session_status() == PHP_SESSION_NONE) {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.topbar .nav a {
+    display: flex;
+    align-items: end;
+    gap: 16px;
+    text-decoration: none;
+    color: #333;
+}
+
+.topbar .nav a img {
+    width: 40px;
+
 }
 
 h1 {
@@ -56,11 +70,15 @@ h1 {
 
 <div class="topbar">
     <div class="nav">
+        
         <button id="_toggle-sidebar" class="toggle-sidebar-btn">
             <span class="material-symbols-outlined">menu</span>
         </button>
-
-        <h1>Lorem Ipsum</h1>
+        <a href="index.php" class="logo">
+            <img src="../Assets/Images/library-logo.png" alt="Logo">
+            <h1>Lorem Ipsum</h1>
+        </a>
+        
 
         <div class="profileBx">
             <!-- <img src="../Assets/Images/user.png" alt="Profile Picture">

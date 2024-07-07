@@ -10,7 +10,8 @@ if (session_status() == PHP_SESSION_NONE) {
     top: 0;
     left: 0;
     background-color: #F3F2ED;
-    width: 240px;
+    padding: 30px;
+    width: 300px;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -19,14 +20,31 @@ if (session_status() == PHP_SESSION_NONE) {
     gap: 72px;
     transition: all 0.3s ease;
     overflow-y: auto;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
 }
 
-.sidebar > a {
+.sidebar .nav > a {
     margin-top: 32px;
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
 }
 
-.sidebar > a img {
-    height: 50px;
+.sidebar a img {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.sidebar .nav a{
+    text-decoration: none;
+    color: #333;
+}
+
+.sidebar .nav a h1 {
+    font-size: 1.5rem;
+    color: #333;
 }
 
 .sidebar .nav {
@@ -34,6 +52,7 @@ if (session_status() == PHP_SESSION_NONE) {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 50px;
 }
 
 .sidebar .nav ul {
@@ -76,11 +95,11 @@ if (session_status() == PHP_SESSION_NONE) {
 </style>
 
 <div id="_sidebar" class="sidebar">
-    <a href="index.php" class="logo">
-        <img src="../Assets/Images/library-logo.png" alt="Logo">
-    </a>
-
     <nav class="nav">
+        <a href="index.php" class="logo">
+            <img src="../Assets/Images/library-logo.png" alt="Logo">
+            <h1>Lorem Ipsum</h1>
+        </a>
         <ul>
             <li class="nav-item">
                 <a href="index.php?page=viewBooks">
