@@ -69,7 +69,7 @@
                             </div>
                             <div class="textGroup">
                                 <label>Status:</label> 
-                                <p><?php echo $book['status']; ?></p>
+                                <p><?php echo $book['book_status']; ?></p>
                             </div>
                             <div class="textGroup">
                                 <label>Stock:</label> 
@@ -79,7 +79,7 @@
                     </div>
 
                     <?php
-                    $book_status = $book['status'];
+                    $book_status = $book['book_status'];
 
                     $archiveBtnText = $book_status === 'archive' ? 'Archived' : 'Archive';
                     $archiveBtnClass = $book_status === 'archive' ? 'archived' : '';
@@ -204,9 +204,9 @@
             <div class="form-group">
                 <label for="status">Status</label>
                 <select name="status" id="_status">
-                    <option value="Available" <?php if ($book['status'] == 'Available') echo 'selected'; ?>>Available</option>
-                    <option value="Archived" <?php if ($book['status'] == 'Archived') echo 'selected'; ?>>Archived</option>
-                    <option value="Unavailable" <?php if($book['status'] == 'Unavailable') echo 'selected'; ?>>Unavailable</option>
+                    <option value="Available" <?php if ($book['book_status'] == 'Available') echo 'selected'; ?>>Available</option>
+                    <option value="Archived" <?php if ($book['book_status'] == 'Archived') echo 'selected'; ?>>Archived</option>
+                    <option value="Unavailable" <?php if($book['book_status'] == 'Unavailable') echo 'selected'; ?>>Unavailable</option>
                 </select>
             </div>
             <div class="input-group">

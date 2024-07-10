@@ -41,11 +41,11 @@
 
     <table class="student-list">
         <?php
-            $query = "SELECT * FROM users WHERE 1=1";
+            $query = "SELECT * FROM user WHERE 1=1";
 
             if (isset($_GET['search']) && !empty($_GET['search'])) {
                 $search = mysqli_real_escape_string($conn, $_GET['search']);
-                $query .= " AND (user_id LIKE '%$search%' OR last_name LIKE '%$search%' OR first_name LIKE '%$search%' OR email LIKE '%$search%')";
+                $query .= " AND (user_id LIKE '%$search%' OR lastname LIKE '%$search%' OR firstname LIKE '%$search%' OR email LIKE '%$search%')";
             }
 
             $result = mysqli_query($conn, $query);
@@ -54,8 +54,8 @@
                 while ($row = mysqli_fetch_assoc($result)) {
                     echo "<tr>";
                         echo "<td>" . htmlspecialchars($row['user_id']) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['last_name']) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['first_name']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['lastname']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['firstname']) . "</td>";
                         echo "<td>" . htmlspecialchars($row['email']) . "</td>";
                         echo "<td>" . 
                             '<a href="userDetails.php?user_id=' . htmlspecialchars($row['user_id']) . '" class="moreBtn">

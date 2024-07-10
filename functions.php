@@ -71,7 +71,7 @@ function addBook(
                                 publish_date, 
                                 category, 
                                 synopsis, 
-                                status, 
+                                book_status, 
                                 stock, 
                                 image) 
               VALUES (
@@ -105,7 +105,7 @@ function editBook(
                     title = '$name', 
                     author = '$author', 
                     category = '$category', 
-                    status = '$status', 
+                    book_status = '$status', 
                     stock = '$stock', 
                     publish_date = '$publish_date'
             WHERE book_id = '$id'";
@@ -119,7 +119,7 @@ function editBook(
 
 function archiveBook($id) {
     global $conn;
-    $query = "UPDATE books SET status = 'Archived' WHERE book_id = '$id'";
+    $query = "UPDATE books SET book_status = 'Archived' WHERE book_id = '$id'";
     $result = mysqli_query($conn, $query);
     if ($result) {
         return true;

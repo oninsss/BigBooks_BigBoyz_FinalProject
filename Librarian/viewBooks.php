@@ -28,24 +28,25 @@
                     <div class="filter">
                         <select name="status-filter" id="_status-filter">
                             <option value="">All Status</option>
-                            <option value="availableBooks" <?php if(isset($_GET['category-filter']) && $_GET['category-filter'] == 'availableBooks') echo 'selected'; ?>>Available</option>
-                            <option value="unavailableBooks" <?php if(isset($_GET['category-filter']) && $_GET['category-filter'] == 'unavailableBooks') echo 'selected'; ?>>Unavailable</option>
-                            <option value="archivedBooks" <?php if(isset($_GET['category-filter']) && $_GET['category-filter'] == 'archivedBooks') echo 'selected'; ?>>Archived</option>
+                            <option value="availableBooks" <?php if(isset($_GET['status-filter']) && $_GET['status-filter'] == 'availableBooks') echo 'selected'; ?>>Available</option>
+                            <option value="unavailableBooks" <?php if(isset($_GET['status-filter']) && $_GET['status-filter'] == 'unavailableBooks') echo 'selected'; ?>>Unavailable</option>
+                            <option value="archivedBooks" <?php if(isset($_GET['status-filter']) && $_GET['status-filter'] == 'archivedBooks') echo 'selected'; ?>>Archived</option>
                         </select>
                         <select name="category-filter" id="_category-filter">
                             <option value="">All Categories</option>
-                            <option value="Fiction" <?php if(isset($_GET['status-filter']) && $_GET['status-filter'] == 'Fiction') echo 'selected'; ?>>Fiction</option>
-                            <option value="Non-Fiction" <?php if(isset($_GET['status-filter']) && $_GET['status-filter'] == 'Non-Fiction') echo 'selected'; ?>>Non-Fiction</option>
-                            <option value="Reference" <?php if(isset($_GET['status-filter']) && $_GET['status-filter'] == 'Reference') echo 'selected'; ?>>Reference</option>
-                            <option value="Educational" <?php if(isset($_GET['status-filter']) && $_GET['status-filter'] == 'Educational') echo 'selected'; ?>>Educational</option>
-                            <option value="Children" <?php if(isset($_GET['status-filter']) && $_GET['status-filter'] == 'Children') echo 'selected'; ?>>Children</option>
-                            <option value="Graphic Novel" <?php if(isset($_GET['status-filter']) && $_GET['status-filter'] == 'Graphic Novel') echo 'selected'; ?>>Graphic Novel</option>
-                            <option value="Drama" <?php if(isset($_GET['status-filter']) && $_GET['status-filter'] == 'Drama') echo 'selected'; ?>>Drama</option>
+                            <option value="Fiction" <?php if(isset($_GET['category-filter']) && $_GET['category-filter'] == 'Fiction') echo 'selected'; ?>>Fiction</option>
+                            <option value="Non-Fiction" <?php if(isset($_GET['category-filter']) && $_GET['category-filter'] == 'Non-Fiction') echo 'selected'; ?>>Non-Fiction</option>
+                            <option value="Reference" <?php if(isset($_GET['category-filter']) && $_GET['category-filter'] == 'Reference') echo 'selected'; ?>>Reference</option>
+                            <option value="Educational" <?php if(isset($_GET['category-filter']) && $_GET['category-filter'] == 'Educational') echo 'selected'; ?>>Educational</option>
+                            <option value="Children" <?php if(isset($_GET['category-filter']) && $_GET['category-filter'] == 'Children') echo 'selected'; ?>>Children</option>
+                            <option value="Graphic Novel" <?php if(isset($_GET['category-filter']) && $_GET['category-filter'] == 'Graphic Novel') echo 'selected'; ?>>Graphic Novel</option>
+                            <option value="Drama" <?php if(isset($_GET['category-filter']) && $_GET['category-filter'] == 'Drama') echo 'selected'; ?>>Drama</option>
                         </select>
                         <button type="submit" id="_filter-btn">
                             <p>Filter</p>
                         </button>
                     </div>
+
                 </form>
             </div>
             <div class="btnGrp">    
@@ -71,17 +72,17 @@
 
             if (isset($_GET['search']) && !empty($_GET['search'])) {
                 $search = mysqli_real_escape_string($conn, $_GET['search']);
-                $query .= " AND (title LIKE '%$search%' OR author LIKE '%$search%')";
+                $query .= " AND (title LIKE '%$search%')";
             }
 
             if (isset($_GET['status-filter']) && !empty($_GET['status-filter'])) {
                 $statusFilter = mysqli_real_escape_string($conn, $_GET['status-filter']);
                 if ($statusFilter == 'availableBooks') {
-                    $query .= " AND stock > 0 AND status = 'Available'";
+                    $query .= " AND stock > 0 AND book_status = 'Available'";
                 } elseif ($statusFilter == 'unavailableBooks') {
-                    $query .= " AND stock = 0 AND status = 'Unavailable'";
+                    $query .= " AND stock = 0 AND book_status = 'Unavailable'";
                 } elseif ($statusFilter == 'archivedBooks') {
-                    $query .= " AND status = 'Archived'";
+                    $query .= " AND book_status = 'Archived'";
                 }
             }
 
@@ -98,12 +99,12 @@
                     echo "<td>" . $row['book_id'] . "</td>";
                     echo "<td>" . $row['title'] . "</td>";
                     echo "<td>" . $row['category'] . "</td>";
-                    if ($row['status'] == 'Available') {
-                        echo "<td><span class='status-avail'>" . $row['status'] . "</span></td>";
-                    } elseif ($row['status'] == 'Unavailable') {
-                        echo "<td><span class='status-unavail'>" . $row['status'] . "</span></td>";
+                    if ($row['book_status'] == 'Available') {
+                        echo "<td><span class='status-avail'>" . $row['book_status'] . "</span></td>";
+                    } elseif ($row['book_status'] == 'Unavailable') {
+                        echo "<td><span class='status-unavail'>" . $row['book_status'] . "</span></td>";
                     } else {
-                        echo "<td><span class='status-archived'>" . $row['status'] . "</span></td>";
+                        echo "<td><span class='status-archived'>" . $row['book_status'] . "</span></td>";
                     }
                     echo "<td>" . $row['stock'] . "</td>";
                     echo "<td><a href='bookDetails.php?book_id=" . $row['book_id'] . "' class='moreBtn'><span class='material-symbols-outlined'>arrow_forward_ios</span></a></td>";
@@ -224,7 +225,6 @@
         </div>
     </div>
 </div>
-
 
 <script>
 document.getElementById('_addBook').addEventListener('click', function() {

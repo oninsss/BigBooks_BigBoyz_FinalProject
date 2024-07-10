@@ -1,9 +1,11 @@
+<?php
+include "../database.php";
+?>
+
 <div class="table-wrapper">
     <div class="header">
         <div class="titleBar">
-            <span class="material-symbols-outlined" id="_sidebar-toggle">
-                menu
-            </span>
+            <span class="material-symbols-outlined" id="_sidebar-toggle">menu</span>
             <h1>View Requests</h1>
         </div>
         <div class="bottom">
@@ -11,22 +13,19 @@
                 <form method="GET" action="index.php">
                     <input type="hidden" name="page" value="viewRequests">
                     <div class="searchBar">
-                        <input 
-                            type="text" 
-                            name="search" 
-                            value="<?php if(isset($_GET['search'])){echo $_GET['search']; } ?>" 
-                            placeholder="Search Record">
+                        <input type="text" name="search" value="<?php if (isset($_GET['search'])) { echo $_GET['search']; } ?>" placeholder="Search Record">
                         <button type="submit" id="_search">
                             <span class="material-symbols-outlined">search</span>
                         </button>
                     </div>
                     <div class="filter">
                         <select name="request-filter" id="_request-filter">
-                            <option value="borrow-requests" <?php if(isset($_GET['request-filter']) && $_GET['request-filter'] == 'borrow-requests') echo 'selected'; ?>>Borrow Requests</option>
+                            <option value="">All Requests</option>
+                            <option value="borrow-requests" <?php if (isset($_GET['request-filter']) && $_GET['request-filter'] == 'borrow-requests') echo 'selected'; ?>>Borrow Requests</option>
+                            <option value="return-requests" <?php if (isset($_GET['request-filter']) && $_GET['request-filter'] == 'return-requests') echo 'selected'; ?>>Return Requests</option>
+                            <option value="payment-requests" <?php if (isset($_GET['request-filter']) && $_GET['request-filter'] == 'payment-requests') echo 'selected'; ?>>Payment Requests</option>
                         </select>
-                        <button type="submit" id="_filter-btn">
-                            <p>Filter</p>
-                        </button>
+                        <button type="submit" id="_filter-btn"><p>Filter</p></button>
                     </div>
                 </form>
             </div>
@@ -34,78 +33,124 @@
 
         <table class="request-list-header">
             <tr id="_header">
-            <?php
-            $requestFilter = isset($_GET['request-filter']) ? $_GET['request-filter'] : '';
+                <?php
+                $requestFilter = isset($_GET['request-filter']) ? $_GET['request-filter'] : '';
                 switch($requestFilter) {
                     case 'borrow-requests':
-                        echo "<th>Request ID</th>";
+                        echo "<th>Borrow ID</th>";
                         echo "<th>Book ID</th>";
-                        echo "<th>Requested by</th>";
-                        echo "<th>Request Date</th>";
+                        echo "<th>Borrowed by</th>";
+                        echo "<th>Borrow Date</th>";
                         echo "<th>Actions</th>";
                         break;
-                    default :
-                        echo "<th>Request ID</th>";
+                    case 'return-requests':
+                        echo "<th>Return ID</th>";
                         echo "<th>Book ID</th>";
-                        echo "<th>Requested by</th>";
-                        echo "<th>Request Date</th>";
+                        echo "<th>Returned by</th>";
+                        echo "<th>Return Date</th>";
+                        echo "<th>Actions</th>";
+                        break;
+                    case 'payment-requests':
+                        echo "<th>Payment ID</th>";
+                        echo "<th>Book ID</th>";
+                        echo "<th>Borrowed by</th>";
+                        echo "<th>Approved by</th>";
+                        echo "<th>Payment Date</th>";
+                        echo "<th>Actions</th>";
+                        break;
+                    default:
+                        echo "<th>Transaction ID</th>";
+                        echo "<th>Book ID</th>";
+                        echo "<th>Borrowed by</th>";
+                        echo "<th>Approved by</th>";
+                        echo "<th>Borrow Date</th>";
+                        echo "<th>Return Date</th>";
                         echo "<th>Actions</th>";
                         break;
                 }
-            ?>
+                ?>
             </tr>
         </table>
     </div>
 
     <table class="request-list">
         <?php
-            include "../database.php";
-            switch ($requestFilter) {
-                case 'borrow-requests':
-                    $sql = "SELECT * FROM borrow_book WHERE status = 'pending'";
-                    $result = $conn->query($sql);
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                            echo "<tr>";
-                            echo "<td>" . $row['borrow_id'] . "</td>";
-                            echo "<td>" . $row['book_id'] . "</td>";
-                            echo "<td>" . $row['borrowed_by'] . "</td>";
-                            echo "<td>" . $row['borrow_date'] . "</td>";
-                            echo "<td>
-                                    <div class='btnGrp'>
-                                        <button class='positiveBtn' data-request-id='" . $row['borrow_id'] . "'>Approve</button>
-                                        <button class='negativeBtn' data-request-id='" . $row['borrow_id'] . "'>Reject</button>
-                                    </div>
-                                </td>";
-                            echo "</tr>";
-                        }
-                    } else {
-                        echo "<tr><td colspan='6'>No requests found</td></tr>";
-                    }
-                    break;
-                default:
-                    $sql = "SELECT * FROM borrow_book WHERE status = 'pending'";
-                    $result = $conn->query($sql);
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                            echo "<tr>";
-                            echo "<td>" . $row['borrow_id'] . "</td>";
-                            echo "<td>" . $row['book_id'] . "</td>";
-                            echo "<td>" . $row['borrowed_by'] . "</td>";
-                            echo "<td>" . $row['borrow_date'] . "</td>";
-                            echo "<td>
-                                    <div class='btnGrp'>
-                                        <button class='positiveBtn' data-request-id='" . $row['borrow_id'] . "'>Approve</button>
-                                        <button class='negativeBtn' data-request-id='" . $row['borrow_id'] . "'>Reject</button>
-                                    </div>
-                                </td>";
-                            echo "</tr>";
-                        }
-                    } else {
-                        echo "<tr><td colspan='6'>No requests found</td></tr>";
-                    }
-                    break;
+        switch ($requestFilter) {
+            case 'borrow-requests':
+                $requests = "SELECT * FROM borrow_books_transactions 
+                                        WHERE b_status = 'Pending'";
+                break;
+            case 'return-requests':
+                $requests = "SELECT * FROM returned_books_transactions 
+                                        WHERE b_status = 'Pending'";
+                break;
+            case 'payment-requests':
+                $requests = "";
+                break;
+            default:
+                $requests = "SELECT * FROM borrow_books_transactions";
+                break;
+        }
+
+        if (isset($_GET['search']) && !empty($_GET['search'])) {
+            $search = $_GET['search'];
+            $requests = "SELECT * FROM borrow_books_transactions WHERE 
+                         transaction_id LIKE '%$search%' OR 
+                         book_id LIKE '%$search%' OR 
+                         borrowed_by LIKE '%$search%' OR 
+                         approved_by LIKE '%$search%'";
+        }
+
+        $result = $conn->query($requests);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                echo "<tr>";
+                switch ($requestFilter) {
+                    case 'borrow-requests':
+                        echo "<td>" . $row['transaction_id'] . "</td>";
+                        echo "<td>" . $row['book_id'] . "</td>";
+                        echo "<td>" . $row['borrowed_by'] . "</td>";
+                        echo "<td>" . $row['b_start_date'] . "</td>";
+                        echo "<td>
+                                <div class='btnGrp'>
+                                    <button class='positiveBtn' onclick='openApproveModal(\"" . $row['transaction_id'] . "\")'>Approve</button>
+                                    <button class='negativeBtn' onclick='openRejectModal(\"" . $row['transaction_id'] . "\")'>Reject</button>
+                                </div>
+                            </td>";
+                        break;
+                    case 'return-requests':
+                        echo "<td>" . $row['transaction_id'] . "</td>";
+                        echo "<td>" . $row['book_id'] . "</td>";
+                        echo "<td>" . $row['returned_by'] . "</td>";
+                        echo "<td>" . $row['date_returned'] . "</td>";
+                        echo "<td>
+                                <div class='btnGrp'>
+                                    <button class='positiveBtn' onclick='openApproveModal(\"" . $row['transaction_id'] . "\")'>Approve</button>
+                                </div>
+                            </td>";
+                        break;
+                    case 'payment-requests':
+                        break;
+                    default:
+                        echo "<td>" . $row['transaction_id'] . "</td>";
+                        echo "<td>" . $row['book_id'] . "</td>";
+                        echo "<td>" . $row['borrowed_by'] . "</td>";
+                        echo "<td>" . "Pending" . "</td>";
+                        echo "<td>" . $row['b_start_date'] . "</td>";
+                        echo "<td>" . $row['b_end_date'] . "</td>";
+                        echo "<td>
+                                <div class='btnGrp'>
+                                    <button class='positiveBtn' onclick='openApproveModal(\"" . $row['transaction_id'] . "\")'>Approve</button>
+                                </div>
+                            </td>";
+                        break;
+                }
+                echo "</tr>";
             }
+        } else {
+            echo "<tr><td colspan='7'>No records found</td></tr>";
+        }
         ?>
     </table>
 </div>
@@ -119,7 +164,7 @@
             <p>Are you sure you want to approve this request?</p>
         </div>
         <div class="modal-footer">
-            <form method="POST" action="updateRequestStatus.php">
+            <form method="POST" action="updateRequest.php">
                 <input type="hidden" name="request_id" id="approve-request-id">
                 <input type="hidden" name="status" value="Approved">
                 <button type="submit" class="positiveBtn">Approve</button>
@@ -138,7 +183,7 @@
             <p>Are you sure you want to reject this request?</p>
         </div>
         <div class="modal-footer">
-            <form method="POST" action="updateRequestStatus.php">
+            <form method="POST" action="updateRequest.php">
                 <input type="hidden" name="request_id" id="reject-request-id">
                 <input type="hidden" name="status" value="Rejected">
                 <button type="submit" class="negativeBtn">Reject</button>
@@ -149,33 +194,22 @@
 </div>
 
 <script>
+    function openApproveModal(transactionId) {
+        document.getElementById('approve-request-id').value = transactionId;
+        document.querySelector('.approve-modal-bg').style.display = 'flex';
+    }
+
+    function openRejectModal(transactionId) {
+        document.getElementById('reject-request-id').value = transactionId;
+        document.querySelector('.reject-modal-bg').style.display = 'flex';
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
-        const approveButtons = document.querySelectorAll('.positiveBtn');
-        const rejectButtons = document.querySelectorAll('.negativeBtn');
-        const approveModal = document.querySelector('.approve-modal-bg');
-        const rejectModal = document.querySelector('.reject-modal-bg');
         const closeModalButtons = document.querySelectorAll('.close-modal');
-        const approveRequestId = document.getElementById('approve-request-id');
-        const rejectRequestId = document.getElementById('reject-request-id');
-
-        approveButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                approveRequestId.value = button.getAttribute('data-request-id');
-                approveModal.style.display = 'flex';
-            });
-        });
-
-        rejectButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                rejectRequestId.value = button.getAttribute('data-request-id');
-                rejectModal.style.display = 'flex';
-            });
-        });
-
         closeModalButtons.forEach(button => {
             button.addEventListener('click', () => {
-                approveModal.style.display = 'none';
-                rejectModal.style.display = 'none';
+                document.querySelector('.approve-modal-bg').style.display = 'none';
+                document.querySelector('.reject-modal-bg').style.display = 'none';
             });
         });
     });

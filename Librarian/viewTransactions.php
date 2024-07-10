@@ -28,8 +28,10 @@
                     <div class="filter">
                         <select name="transaction-filter" id="_transaction-filter">
                             <option value="">All Transactions</option>
-                            <option value="borrowed-books" <?php if(isset($_GET['transaction-filter']) && $_GET['transaction-filter'] == 'availableBooks') echo 'selected'; ?>>Borrowed Books</option>
-                            <option value="returned" <?php if(isset($_GET['transaction-filter']) && $_GET['transaction-filter'] == 'availableBooks') echo 'selected'; ?>>Returned Books</option>
+                            <option value="borrowed" <?php if(isset($_GET['transaction-filter']) && $_GET['transaction-filter'] == 'borrowed') echo 'selected'; ?>>Borrowed Books</option>
+                            <option value="returned" <?php if(isset($_GET['transaction-filter']) && $_GET['transaction-filter'] == 'returned') echo 'selected'; ?>>Returned Books</option>
+                            <option value="payments" <?php if(isset($_GET['transaction-filter']) && $_GET['transaction-filter'] == 'payments') echo 'selected'; ?>>Payments</option>
+                            <option value="cleared" <?php if(isset($_GET['transaction-filter']) && $_GET['transaction-filter'] == 'cleared') echo 'selected'; ?>>Cleared</option>
                         </select>
                         <button type="submit" id="_filter-btn">
                             <p>Filter</p>
@@ -50,7 +52,6 @@
                         echo "<th>Borrowed by</th>";
                         echo "<th>Borrow Date</th>";
                         echo "<th>Status</th>";
-                        echo "<th>More</th>";
                         break;
                     case 'returned':
                         echo "<th>Return ID</th>";
@@ -61,11 +62,10 @@
                         break;
                     default:
                         echo "<th>Transaction ID</th>";
-                        echo "<th>Book ID</th>";
-                        echo "<th>Borrowed by</th>";
-                        echo "<th>Approved by</th>";
-                        echo "<th>Borrow Date</th>";
-                        echo "<th>Return Date</th>";
+                        echo "<th>Reference ID</th>";
+                        echo "<th>User ID</th>";
+                        echo "<th>Transaction Date</th>";
+                        echo "<th>Purpose</th>";
                         break;
                 }
             ?>
@@ -73,23 +73,23 @@
         </table>
     </div>
 
-    <table class="transaction-list">
+    <table class="transactions-list">
         <?php
             switch ($transactionFilter) {
                 case 'borrowed':
-                    $transactions = "SELECT * FROM borrow_book WHERE status = 'Approved' OR status = 'Rejected'";
+                    $transactions = "SELECT * FROM all_transactions WHERE purpose = 'Borrowed'";
                     break;
                 case 'returned':
-                    $transactions = "SELECT * FROM transactions WHERE status = 'Returned'";
+                    $transactions = "SELECT * FROM all_transactions WHERE purpose = 'Returned'";
                     break;
                 default:
-                    $transactions = "SELECT * FROM transactions";
+                    $transactions = "SELECT * FROM all_transactions";
                     break;
             }
 
             if(isset($_GET['search']) && !empty($_GET['search'])) {
                 $search = $_GET['search'];
-                $transactions = "SELECT * FROM transactions WHERE transaction_id LIKE '%$search%' OR book_id LIKE '%$search%' OR borrower_id LIKE '%$search%' OR approved_by LIKE '%$search%' OR borrow_date LIKE '%$search%' OR return_date LIKE '%$search%'";
+                $transactions = "SELECT * FROM all_transactions WHERE transaction_id LIKE '%$search%' OR book_id LIKE '%$search%' OR borrower_id LIKE '%$search%' OR approved_by LIKE '%$search%' OR borrow_date LIKE '%$search%' OR return_date LIKE '%$search%'";
             }
 
             $result = $conn->query($transactions);
@@ -99,13 +99,11 @@
                     echo "<tr>";
                     switch($transactionFilter) {
                         case 'borrowed':
-                            echo "<td>".$row['borrow_id']."</td>";
-                            echo "<td>".$row['book_id']."</td>";
-                            echo "<td>".$row['borrowed_by']."</td>";
-                            echo "<td>".$row['approved_by']."</td>";
-                            echo "<td>".$row['borrow_date']."</td>";
-                            echo "<td>".$row['status']."</td>";
-                            echo "<td><a href='index.php?page=requestInfo&transaction_id=".$row['borrow_id']."'>More</a></td>";
+                            echo "<td>".$row['transaction_id']."</td>";
+                            echo "<td>".$row['reference_id']."</td>";
+                            echo "<td>".$row['user_id']."</td>";
+                            echo "<td>".$row['tr_date']."</td>";
+                            echo "<td>".$row['purpose']."</td>";
                             break;
                         case 'returned':
                             echo "<td>".$row['return_id']."</td>";
@@ -116,11 +114,10 @@
                             break;
                         default:
                             echo "<td>".$row['transaction_id']."</td>";
-                            echo "<td>".$row['librarian_id']."</td>";
-                            echo "<td>".$row['student_id']."</td>";
-                            echo "<td>".$row['book_id']."</td>";
-                            echo "<td>".$row['date_borrowed']."</td>";
-                            echo "<td>".$row['date_returned']."</td>";
+                            echo "<td>".$row['reference_id']."</td>";
+                            echo "<td>".$row['user_id']."</td>";
+                            echo "<td>".$row['tr_date']."</td>";
+                            echo "<td>".$row['purpose']."</td>";
                             break;
                     }
                     echo "</tr>";
