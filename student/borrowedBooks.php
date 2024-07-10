@@ -145,12 +145,7 @@
                                 if ($result->num_rows > 0) {
                                     echo '<button class="btn btn-secondary" disabled>Return (Pending)</button>';
                                 } else {
-                                    echo '<form method="post" action="returnBook.php">
-                                        <input type="hidden" name="transaction_id" value="'.$row['transaction_id'].'">
-                                        <input type="hidden" name="book_id" value="'.$book_id.'">
-                                        <input type="hidden" name="returnDate" value="'.date('Y-m-d').'">
-                                        <button class="btn btn-success" type="submit">Return</button>
-                                    </form>';
+                                    echo '<button class="btn btn-success" onclick="showModal(\''.$row['transaction_id'].'\', \''.$book_id.'\')">Return</button>';
                                 }
                                 echo '</td>';
                                 echo '</tr>';
@@ -195,7 +190,6 @@
                                 $active_class = ($page_no == $i) ? "active" : "";
                                 echo '<li class="page-item '.$active_class.'">';
                                 echo '<a class="page-link" href="?page_no='.$i.'&search='.$search_query.'&category='.$category.'">'.$i.'</a>';
-                                echo '</li>';
                             }
                             echo '<li class="page-item '.$next_class.'">';
                             echo '<a class="page-link" href="?page_no='.($page_no + 1).'&search='.$search_query.'&category='.$category.'">Next</a>';
@@ -217,5 +211,41 @@
             ?>
         </div>
     </div>
+
+    <!-- The Modal -->
+    <div id="returnModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Confirm Return</h2>
+            <p>Are you sure you want to return this book?</p>
+            <div class="modal-buttons">
+                <form id="confirmReturnForm" method="post" action="returnBook.php">
+                    <input type="hidden" name="transaction_id" id="modalTransactionId">
+                    <input type="hidden" name="book_id" id="modalBookId">
+                    <input type="hidden" name="returnDate" value="<?php echo date('Y-m-d'); ?>">
+                    <button class="btn btn-success" type="submit">Yes</button>
+                </form>
+                <button class="btn btn-danger" onclick="closeModal()">No</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showModal(transactionId, bookId) {
+            document.getElementById('modalTransactionId').value = transactionId;
+            document.getElementById('modalBookId').value = bookId;
+            document.getElementById('returnModal').style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById('returnModal').style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('returnModal')) {
+                closeModal();
+            }
+        }
+    </script>
 </body>
 </html>

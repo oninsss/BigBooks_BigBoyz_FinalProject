@@ -15,6 +15,7 @@
         }
         body, html {
             background-color: #F3F2ED;
+            background: url('../Assets/Images/BigBooksLogo.png') no-repeat center center fixed;
             font-family: 'Poppins', sans-serif;
             width: 100%;
             height: 100%;
@@ -36,6 +37,17 @@
             overflow: auto;
             z-index: 1;
         }
+
+        .imgBg{
+            position: absolute;
+            max-width: 500px;
+            max-height: 500px;
+            width: auto;
+            height: auto;
+            right: 30%;
+            top: 20%;
+            z-index: 0;
+        }
     </style>
     <link rel="stylesheet" href="Assets/Style/sidebar.css" class="css">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -55,6 +67,7 @@
     ?>
 
     <div class="container">  
+        <!-- <img class="imgBg" src="../Assets/Images/BigBooksLogo.png" alt=""> -->
         <?php include 'sidebar.php'; ?>
         <div class="main-content">
             <!-- this is where things will show up when buttons on the sidebar are clicked -->

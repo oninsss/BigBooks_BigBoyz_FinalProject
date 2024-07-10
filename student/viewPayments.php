@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 </head>
 <body>
-    <div class="viewRequestsCont">
+    <div class="viewPaymentsCont">
         <div class="topPart">
             <!-- Top part code here -->
         </div>
@@ -41,19 +41,6 @@
                 <h1>Payable Balance: ₱<?php echo $db_balance; ?></h1>
                 <p>Pay your balance to continue borrowing books.</p>
 
-                <h5>Breakdown of balance</h5>
-                <table>
-                    <th>
-                        <td>Details</td>
-                        <td>Amount</td>
-                    </th>
-                    <tr>
-                        <td>1</td>
-                        <td>3 days Overdue</td>
-                        <td>₱50.00</td>
-                    </tr>
-                </table>
-
                 <div class="paymentOptions">
                     <h2>Payment Options</h2>
                     <p>Pay your balance through the following options:</p>
@@ -81,8 +68,8 @@
             <span class="close" onclick="closeModal()">&times;</span>
             <p>Are you sure you want to pay this amount?</p>
             <div class="modal-buttons">
-                <button type="button" onclick="submitForm()">Yes</button>
-                <button type="button" onclick="closeModal()">No</button>
+                <button type="button" class="btn btn-success" onclick="submitForm()">Yes</button>
+                <button type="button" class="btn btn-danger" onclick="closeModal()">No</button>
             </div>
         </div>
     </div>
