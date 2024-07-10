@@ -4,229 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Books</title>
-    
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-        body {
-            /* font-family: Arial, sans-serif; */
-            background-color: #F3F2ED;
-            margin: 0;
-            padding: 0;
-        }
-        .bookscontainer {
-            width: 100%;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        h1 {
-            font-size: 2rem;
-            color: #333;
-        }
-    
-        .contTopPart {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .contBottomPart {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .books {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: flex-start;
-            overflow-y: auto;
-        }
-        .book {
-            background-color: #fff;
-            display: flex;
-            flex-direction: column;
-            justify-content: ce;
-            align-items: center;
-            gap: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            margin: 20px;
-            width: 250px;
-            min-height: 550px;
-            height: fit-content;
-            overflow: hidden;
-            transition: transform 0.3s;
-        }
-        .book img {
-            width: 100%;
-            max-height: 350px;
-            height: auto;
-        }
-        .book h2 {
-            font-size: 18px;
-            font-weight: 600;
-            text-align: center;
-            color: #333;
-            margin: 10px;
-        }
-        .book p {
-            color: #666;
-            font-size: 12px;
-            margin: 10px;
-        }
-        .book a {
-            display: block;
-            background-color: #007BFF;
-            color: #fff;
-            text-decoration: none;
-            padding: 10px;
-            margin: 10px;
-            margin-top: 20px;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-        .book a:nth-child(1), .book .viewMore button{
-            background-color: #28a745;
-        }
-        .book a:hover, .book .viewMore button:hover{
-            background-color: #0056b3;
-        }
-        .book:hover {
-            transform: scale(1.05);
-        }
-        .book-content {
-            margin-top: 20px;
-        }
-        .pagination {
-            display: flex;
-            justify-content: center;
-            list-style-type: none;
-            padding: 0;
-        }
-        .pagination li {
-            margin: 0 5px;
-        }
-        .pagination a {
-            text-decoration: none;
-            color: #007BFF;
-            padding: 10px 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-        .pagination a:hover {
-            background-color: #0056b3;
-            color: #fff;
-        }
-        .pagination .disabled a {
-            color: #999;
-            pointer-events: none;
-        }
-
-        /* to set the background color of the currently selected pagination */
-        .pagination .active a{
-            background-color: #1d1d1f;
-            color: #fff;
-        }
-
-        .viewMore{
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            justify-content: space-around;
-            width: 100%;
-            margin-bottom: 10px;
-        }
-
-        .viewMore a, .viewMore button{
-            margin: 0;
-            margin: 0 10px 0 10px;
-            text-align: center;
-        }
-
-
-        #searchBar{
-            height: 50px;
-            width: fit-content;
-            display: flex;
-            /* background-color: #fff; */
-            border-radius: 30px;
-            padding: 10px 10px;
-            align-items: center;
-            transition: all 0.8s ease-in-out;
-            
-        }
-
-        #searchBar:hover,
-        #searchBar:focus-within{
-            background-color: #fff;
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        #searchBar:hover input{
-            width: 400px;
-            padding: 10px;
-        }
-
-        #searchBar input{
-            width: 0;
-            outline: none;
-            border: none;
-            background: transparent;
-            transition: all 0.8s ease-in-out;
-        }
-
-        #searchBar input:focus,
-        #searchBar:focus-within input{
-            width: 400px;
-            padding: 10px;
-        }
-
-        #searchBar input:focus > #searchBar{
-            background-color: #fff;
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        #searchBarIcon{
-            padding: 0;
-            transition: all 0.8s ease-in-out;
-        }
-
-        .dropdown ul li{
-            font-size: 0.75rem;
-        }
-
-        .modal-body{
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .modal-body .bookImage{
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-body img{
-            width: 200px;
-            object-fit: cover;
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.4);
-        }
-
-        hr{
-            width: 100%;
-            border: 2px solid #000;
-        }
-
-    </style>
+    <link rel="stylesheet" href="./Assets/Style/viewBooks.css" />
 </head>
 <body>
 
@@ -234,46 +12,48 @@
         
 
         <div class="contTopPart">
-        <div class="dropdown">
-            <form id="categoryForm" method="get" action="index.php">
-                <input type="hidden" name="page" value="viewBooks">
-                <input type="hidden" name="page_no" value="1">
-                <input type="hidden" name="search" value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
-                <label for="categorySelect" class="visually-hidden">Select a category:</label>
-                <select class="form-select" id="categorySelect" name="category" onchange="this.form.submit()">
-                    <option value="">Select a category</option>
-                    <option value="All" <?php if (isset($_GET['category']) && $_GET['category'] === 'All') echo 'selected'; ?>>All</option>
-                    <option value="Fiction" <?php if (isset($_GET['category']) && $_GET['category'] === 'Fiction') echo 'selected'; ?>>Fiction</option>
-                    <option value="Science Fiction" <?php if (isset($_GET['category']) && $_GET['category'] === 'Science Fiction') echo 'selected'; ?>>Science Fiction</option>
-                    <option value="Fantasy" <?php if (isset($_GET['category']) && $_GET['category'] === 'Fantasy') echo 'selected'; ?>>Fantasy</option>
-                    <option value="Mystery" <?php if (isset($_GET['category']) && $_GET['category'] === 'Mystery') echo 'selected'; ?>>Mystery</option>
-                    <option value="Horror" <?php if (isset($_GET['category']) && $_GET['category'] === 'Horror') echo 'selected'; ?>>Horror</option>
-                    <option value="Romance" <?php if (isset($_GET['category']) && $_GET['category'] === 'Romance') echo 'selected'; ?>>Romance</option>
-                    <option value="Dystopian" <?php if (isset($_GET['category']) && $_GET['category'] === 'Dystopian') echo 'selected'; ?>>Dystopian</option>
-                    <option value="Adventure" <?php if (isset($_GET['category']) && $_GET['category'] === 'Adventure') echo 'selected'; ?>>Adventure</option>
-                    <option value="Historical" <?php if (isset($_GET['category']) && $_GET['category'] === 'Historical') echo 'selected'; ?>>Historical</option>
-                    <option value="Non-Fiction" <?php if (isset($_GET['category']) && $_GET['category'] === 'Non-Fiction') echo 'selected'; ?>>Non-Fiction</option>
-                </select>
-            </form>
-        </div>
-
-
             <form class="searchBar" id="searchBar" method="get" action="index.php">
-                <input type="hidden" name="page" value="viewBooks">
-                <input type="hidden" name="page_no" value="1">
-                <input class="form" name="search" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn success" type="submit">
-                    <span class="material-symbols-outlined" id="searchBarIcon">
-                        search
-                    </span>
-                </button>
-            </form>
+                    <input type="hidden" name="page" value="viewBooks">
+                    <input type="hidden" name="page_no" value="1">
+                    <input class="form" name="search" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn success" type="submit">
+                        <span class="material-symbols-outlined" id="searchBarIcon">
+                            search
+                        </span>
+                    </button>
+                </form>
+            <div class="dropdown">
+                <form id="categoryForm" method="get" action="index.php">
+                    <input type="hidden" name="page" value="viewBooks">
+                    <input type="hidden" name="page_no" value="1">
+                    <input type="hidden" name="search" value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
+                    <label for="categorySelect" class="visually-hidden">Select a category:</label>
+                    <select class="form-select" id="categorySelect" name="category" onchange="this.form.submit()">
+                        <option value="">Select a category</option>
+                        <option value="All" <?php if (isset($_GET['category']) && $_GET['category'] === 'All') echo 'selected'; ?>>All</option>
+                        <option value="Fiction" <?php if (isset($_GET['category']) && $_GET['category'] === 'Fiction') echo 'selected'; ?>>Fiction</option>
+                        <option value="Science Fiction" <?php if (isset($_GET['category']) && $_GET['category'] === 'Science Fiction') echo 'selected'; ?>>Science Fiction</option>
+                        <option value="Fantasy" <?php if (isset($_GET['category']) && $_GET['category'] === 'Fantasy') echo 'selected'; ?>>Fantasy</option>
+                        <option value="Mystery" <?php if (isset($_GET['category']) && $_GET['category'] === 'Mystery') echo 'selected'; ?>>Mystery</option>
+                        <option value="Horror" <?php if (isset($_GET['category']) && $_GET['category'] === 'Horror') echo 'selected'; ?>>Horror</option>
+                        <option value="Romance" <?php if (isset($_GET['category']) && $_GET['category'] === 'Romance') echo 'selected'; ?>>Romance</option>
+                        <option value="Dystopian" <?php if (isset($_GET['category']) && $_GET['category'] === 'Dystopian') echo 'selected'; ?>>Dystopian</option>
+                        <option value="Adventure" <?php if (isset($_GET['category']) && $_GET['category'] === 'Adventure') echo 'selected'; ?>>Adventure</option>
+                        <option value="Historical" <?php if (isset($_GET['category']) && $_GET['category'] === 'Historical') echo 'selected'; ?>>Historical</option>
+                        <option value="Non-Fiction" <?php if (isset($_GET['category']) && $_GET['category'] === 'Non-Fiction') echo 'selected'; ?>>Non-Fiction</option>
+                    </select>
+                </form>
+            </div>
         </div>
         <div class="contBottomPart">
             <h1>Books</h1> 
             <?php
                 if (isset($_GET['search'])) {
+                    if ($_GET['search'] == "") {
+                        echo '<h6>Showing all books</h6>';
+                    } else {
                     echo '<h6>Search results for "' . $_GET['search'] . '"</h6>';
+                    }
                 }
             ?>
             <div class="books">
@@ -304,9 +84,8 @@
                 $previous_page = $page_no - 1;
                 $next_page = $page_no + 1;
 
-                // Construct base SQL query
-                $sql = "SELECT * FROM bigbooks.books";
-                $result_count_sql = "SELECT COUNT(*) as total_records FROM bigbooks.books";
+                $sql = "SELECT * FROM bigbooks.books WHERE book_status = 'Available' AND stock >= 1";
+                $result_count_sql = "SELECT COUNT(*) as total_records FROM bigbooks.books WHERE book_status = 'Available' AND stock >= 1";
 
                 // Adjust SQL query based on search and category filters
                 $where_clause = [];
@@ -325,12 +104,11 @@
 
                 // Combine WHERE conditions if needed
                 if (!empty($where_clause)) {
-                    $sql .= " WHERE " . implode(" AND ", $where_clause);
-                    $result_count_sql .= " WHERE " . implode(" AND ", $where_clause);
+                    $sql .= " AND " . implode(" AND ", $where_clause);
+                    $result_count_sql .= " AND " . implode(" AND ", $where_clause);
                 }
 
                 $sql .= " LIMIT $offset, $total_records_per_page";
-
 
                 // Get total number of pages
                 $rstmt = $conn->prepare($result_count_sql);
@@ -367,63 +145,65 @@
                     // Get results
                     $result = $stmt->get_result();
 
-                    
-                    
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
-                            $modalId = 'modal' . $row['id']; // Assuming 'id' is a unique identifier for each book
-                    
-                            echo '<div class="book">';
-                            echo '<div class="topPart">';
-                            echo '<img src="' . $row['image_link'] . '" alt="' . $row['title'] . '">';
-                            echo '<div class="book-content">';
-                            echo '<h2>' . $row['title'] . '</h2>';
-                            echo '<p><strong>Author:</strong> ' . $row['author'] . '</p>';
-                            echo '<p><strong>Published:</strong> ' . $row['publication_date'] . '</p>';
-                            echo '<p><strong>Category:</strong> ' . $row['category'] . '</p>';
-                            echo '</div>';
-                            echo '</div>';
-                            echo '<div class="viewMore">';
-                            echo '<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#' . $modalId . '">Borrow</button>';
-                            echo '<div class="modal fade" id="' . $modalId . '" tabindex="-1" aria-labelledby="' . $modalId . 'Label" aria-hidden="true" data-backdrop="false">';
-                            echo '<div class="modal-dialog modal-dialog-centered">';
-                            echo '<div class="modal-content">';
-                            echo '<div class="modal-header">';
-                            echo '<h1 class="modal-title fs-5" id="' . $modalId . 'Label">Book Borrowing Confirmation</h1>';
-                            echo '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>';
-                            echo '</div>';
-                            echo '<div class="modal-body">';
-                            echo '<div class="bookImage">';
-                            echo '<img src="' . $row['image_link'] . '" alt="' . $row['title'] . '">'; 
-                            echo '<h2>' . $row['title'] . '</h2>';
-                            echo '</div>';
-                            echo '<hr>';
-                            echo '<p><strong>Author:</strong> ' . $row['author'] . '</p>';
-                            echo '<p><strong>Published:</strong> ' . $row['publication_date'] . '</p>';
-                            echo '<p><strong>Category:</strong> ' . $row['category'] . '</p>';
-                            echo '
-                            <form method="post" action="confirm_borrow.php">
-                                <div class="form-group">
-                                    <label for="start_date">Start Date:</label>
-                                    <input type="date" class="form-control" id="start_date" name="start_date" required>
+                            $modalId = 'modal' . $row['book_id']; // Assuming 'id' is a unique identifier for each book
+
+                            echo <<<HTML
+                            <div class="book">
+                                <div class="topPart">
+                                    <img src="{$row['image']}" alt="{$row['title']}">
+                                    <div class="book-content">
+                                        <h2>{$row['title']}</h2>
+                                        <p><strong>Author:</strong> {$row['author']}</p>
+                                        <p><strong>Published:</strong> {$row['publish_date']}</p>
+                                        <p><strong>Category:</strong> {$row['category']}</p>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="end_date">End Date:</label>
-                                    <input type="date" class="form-control" id="end_date" name="end_date" required>
-                                </div>';
-                            echo '</div>';
-                            echo '<div class="modal-footer">';
-                            echo '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>';
-                            echo '<button type="button" class="btn btn-primary">Save changes</button>';
-                            echo '</div>';
-                            echo '</form>';
-                            echo '</div>';
-                            echo '</div>';
-                            echo '</div>';
-                            echo '<script>document.body.appendChild(document.getElementById("' . $modalId . '"));</script>';
-                            echo '<a href="' . $row['link'] . '" target="_blank">View more</a>';
-                            echo '</div>';
-                            echo '</div>';
+                                <div class="viewMore">
+                                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#{$modalId}">Borrow</button>
+                                    <div class="modal fade" id="{$modalId}" tabindex="-1" aria-labelledby="{$modalId}Label" aria-hidden="true" data-backdrop="false">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="{$modalId}Label">Book Borrowing Confirmation</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="bookImage">
+                                                        <img src="{$row['image']}" alt="{$row['title']}">
+                                                        <h2>{$row['title']}</h2>
+                                                    </div>
+                                                    <hr>
+                                                    <p><strong>Author:</strong> {$row['author']}</p>
+                                                    <p><strong>Published:</strong> {$row['publish_date']}</p>
+                                                    <p><strong>Category:</strong> {$row['category']}</p>
+                                                    <form method="post" action="borrowTransaction.php">
+                                                        <input type="hidden" name="book_id" value="{$row['book_id']}">
+                                                        <input type="hidden" name="title" value="{$row['title']}">
+                                                        <input type="hidden" name="author" value="{$row['author']}">
+                                                        <div class="form-group">
+                                                            <label for="start_date">Start Date:</label>
+                                                            <input type="date" class="form-control" id="start_date" name="start_date" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="end_date">End Date:</label>
+                                                            <input type="date" class="form-control" id="end_date" name="end_date" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary">Confirm</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <script>document.body.appendChild(document.getElementById("{$modalId}"));</script>
+                                    <a href="index.php?page=viewBooksDetails&book_id={$row['book_id']}">View Details</a>
+                                </div>
+                            </div>
+                            HTML;
                         }
                     } else {
                         echo "<p>No results found</p>";
@@ -435,7 +215,7 @@
                 }
 
                 $conn->close();
-                ?>
+            ?>
                 
             </div>
             <nav aria-label="Page navigation">
@@ -535,7 +315,11 @@
                 var endDate = new Date(endInput.value);
 
                 // Check if either start date or end date is in the past
-                var today = new Date();
+                var today = new Date(); //make sure that it gets the day today
+                startDate.setHours(0, 0, 0, 0);
+                endDate.setHours(0, 0, 0, 0);
+                today.setHours(0, 0, 0, 0);
+
                 if (startDate < today || endDate < today) {
                     return true;
                 } else {

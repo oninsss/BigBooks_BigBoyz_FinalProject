@@ -27,10 +27,15 @@ cannot delete any book
 Account (Student)
 */
 include("database.php");
-include("books.json");
 
-function format_Id($name, $publish_date, $category, $count, $added_date) {
-    $id = substr($name, 0, 2)                                               # First 2 letters from the Book Title
+# Book Stuff
+function format_BookId(
+                    $title, 
+                    $publish_date, 
+                    $category, 
+                    $count, 
+                    $added_date) {
+    $id = strtoupper(substr($title, 0, 2))                                            # First 2 letters from the Book Title
         . strtoupper(date('M', strtotime($publish_date)))                   # Month (published)
         . date('d', strtotime($added_date))                                 # Day (added to the system)
         . date('Y', strtotime($publish_date))                               # Year (published)
@@ -41,41 +46,107 @@ function format_Id($name, $publish_date, $category, $count, $added_date) {
     return $id;
 }
 
-$retrieved = "SELECT * FROM books";
-$result = mysqli_query($conn, $retrieved);
-
-if ($result->num_rows > 0) {
-    $titles = [];
-    $authors = [];
-    $publication_dates = [];
-    $categories = [];
-    $links = [];
-    $image_links = [];
-
-    while($row = $result->fetch_assoc()) {
-        $titles[] = $row['title'];
-        $authors[] = $row['author'];
-        $publication_dates[] = $row['publish_date'];
-        $categories[] = $row['category'];
-        $links[] = $row['link'];
-        $image_links[] = $row['image'];
+function addBook(
+                $title, 
+                $author, 
+                $publish_date, 
+                $category, 
+                $synopsis, 
+                $status, 
+                $stock, 
+                $image, 
+                $added_date) {
+    global $conn;
+    $count = 0;
+    $query = "SELECT * FROM books";
+    $result = mysqli_query($conn, $query);
+    $count = mysqli_num_rows($result);
+    $count++;
+    $book_id = format_BookId($title, $publish_date, $category, $count, $added_date);
+    $query = "INSERT INTO books (
+                                book_id, 
+                                title, 
+                                author, 
+                                publish_date, 
+                                category, 
+                                synopsis, 
+                                status, 
+                                stock, 
+                                image) 
+              VALUES (
+                    '$book_id', 
+                    '$title', 
+                    '$author', 
+                    '$publish_date', 
+                    '$category', 
+                    '$synopsis', 
+                    '$status', 
+                    '$stock', 
+                    '$image')";
+    $result = mysqli_query($conn, $query);
+    if ($result) {
+        return true;
+    } else {
+        return false;
     }
-
-    echo "Titles:\n";
-    print_r($titles);
-    echo "\nAuthors:\n";
-    print_r($authors);
-    echo "\nPublication Dates:\n";
-    print_r($publication_dates);
-    echo "\nCategories:\n";
-    print_r($categories);
-    echo "\nLinks:\n";
-    print_r($links);
-    echo "\nImage Links:\n";
-    print_r($image_links);
-} else {
-    echo "0 results";
 }
 
-$conn->close();
+function editBook(
+                $id, 
+                $name, 
+                $author, 
+                $category, 
+                $status, 
+                $stock, 
+                $publish_date ) {
+    global $conn;
+    $query = "UPDATE books SET 
+                    title = '$name', 
+                    author = '$author', 
+                    category = '$category', 
+                    status = '$status', 
+                    stock = '$stock', 
+                    publish_date = '$publish_date'
+            WHERE book_id = '$id'";
+    $result = mysqli_query($conn, $query);
+    if ($result) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function archiveBook($id) {
+    global $conn;
+    $query = "UPDATE books SET status = 'Archived' WHERE book_id = '$id'";
+    $result = mysqli_query($conn, $query);
+    if ($result) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function deleteBook($id) {
+    global $conn;
+    $query = "DELETE FROM books WHERE book_id = '$id'";
+    $result = mysqli_query($conn, $query);
+    if ($result) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+# Account Stuff
+function format_librarianId() { 
+    global $conn;
+    $query = "SELECT * FROM users WHERE user_id LIKE 'LIB%'";
+    $result = mysqli_query($conn, $query);
+    $count = mysqli_num_rows($result);
+    $count++;
+    $librarian_id = "LIB" . str_pad($count, 5, "0", STR_PAD_LEFT);
+    return $librarian_id;
+}
+
 ?>

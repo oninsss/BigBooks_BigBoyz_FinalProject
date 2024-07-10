@@ -1,0 +1,87 @@
+.sidebar {
+    position: sticky;
+    top: 0;
+    left: 0;
+    background-color: #F3F2ED;
+    padding: 30px;
+    width: 300px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    gap: 72px;
+    transition: all 0.3s ease;
+    overflow-y: auto;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+}
+
+.sidebar .nav > a {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+}
+
+.sidebar a img {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.sidebar .nav a{
+    text-decoration: none;
+    color: #333;
+}
+
+.sidebar .nav a h1 {
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.sidebar .nav {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+}
+
+.sidebar .nav ul {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar .nav ul li {
+    width: 100%;
+}
+
+.sidebar .nav ul li a {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    text-decoration: none;
+    color: #333;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.sidebar .nav ul li a .icon-text {
+    display: inline;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        display: none;
+    }
+
+    .toggle-sidebar-btn {
+        display: block;
+    }
+}

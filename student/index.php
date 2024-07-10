@@ -37,6 +37,7 @@
             z-index: 1;
         }
     </style>
+    <link rel="stylesheet" href="Assets/Style/sidebar.css" class="css">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3/js/bootstrap.min.js"></script>
@@ -56,6 +57,12 @@
                 include 'borrowedBooks.php';
             } else if ($page == 'profile') {
                 include 'profile.php';
+            } else if ($page == 'viewRequests') {
+                include 'viewRequests.php';
+            } else if ($page == 'history') {
+                include 'history.php';
+            } else if ($page == 'viewBooksDetails') {
+                include 'viewBooksDetails.php';
             }
             ?>
         </div>
