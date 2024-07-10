@@ -40,7 +40,7 @@ if (session_status() == PHP_SESSION_NONE) {
                 </a>
             </li>
             <li class="nav-item">
-                <a href="index.php?page=history">
+                <a href="index.php?page=viewHistory">
                     <span class="material-symbols-outlined">
                         history
                     </span>

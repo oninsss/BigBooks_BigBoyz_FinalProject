@@ -43,6 +43,17 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3/js/bootstrap.min.js"></script>
 </head>
 <body>
+    <?php
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+    if (!isset($_SESSION['student_id'])) {
+        header('Location: login.php');
+    }
+    
+
+    ?>
+
     <div class="container">  
         <?php include 'sidebar.php'; ?>
         <div class="main-content">
@@ -59,8 +70,8 @@
                 include 'profile.php';
             } else if ($page == 'viewPayments') {
                 include 'viewPayments.php';
-            } else if ($page == 'history') {
-                include 'history.php';
+            } else if ($page == 'viewHistory') {
+                include 'viewHistory.php';
             } else if ($page == 'viewBooksDetails') {
                 include 'viewBooksDetails.php';
             } else if ($page == 'payBalance') {
