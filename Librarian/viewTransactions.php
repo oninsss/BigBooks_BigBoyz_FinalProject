@@ -77,10 +77,10 @@
         <?php
             switch ($transactionFilter) {
                 case 'borrowed':
-                    $transactions = "SELECT * FROM all_transactions WHERE purpose = 'Borrowed'";
+                    $transactions = "SELECT * FROM all_transactions WHERE reference_id LIKE 'BR%'";
                     break;
                 case 'returned':
-                    $transactions = "SELECT * FROM all_transactions WHERE purpose = 'Returned'";
+                    $transactions = "SELECT * FROM all_transactions WHERE reference_id LIKE 'RR%'";
                     break;
                 default:
                     $transactions = "SELECT * FROM all_transactions";

@@ -123,46 +123,26 @@
         <div class="modal-header">
             <h1>Add Book</h1>
             <button class="close-modal">
-                <span class="material-symbols-outlined">
-                    close
-                </span>
+                <span class="material-symbols-outlined">close</span>
             </button>
         </div>
 
-
-        <form id="_addBook-form" action="index.php?page=viewBooks" method="POST">
+        <form id="_addBook-form" action="index.php?page=viewBooks" method="POST" enctype="multipart/form-data">
             <div class="input-group">
                 <div class="form-group">
                     <label for="title">Title</label>
-                    <input 
-                        type="text" 
-                        name="title" 
-                        id="_title" 
-                        class="form-control" 
-                        placeholder="eg. Goosebumps: The Haunted Mask" 
-                        required>
+                    <input type="text" name="title" id="_title" class="form-control" placeholder="eg. Goosebumps: The Haunted Mask" required>
                 </div>
                 <div class="form-group">
                     <label for="author">Author</label>
-                    <input 
-                        type="text" 
-                        name="author" 
-                        id="_author" 
-                        class="form-control" 
-                        placeholder="eg. R. L. Stine"
-                        required>
+                    <input type="text" name="author" id="_author" class="form-control" placeholder="eg. R. L. Stine" required>
                 </div>
             </div>
 
             <div class="input-group">
                 <div class="form-group">
-                    <label for="category">Publish Date</label>
-                    <input 
-                        type="date" 
-                        name="publishDate" 
-                        id="_publishDate" 
-                        class="form-control"
-                        required>
+                    <label for="publishDate">Publish Date</label>
+                    <input type="date" name="publishDate" id="_publishDate" class="form-control" required>
                 </div>
                 <div class="form-group">
                     <label for="category">Category</label>
@@ -180,23 +160,13 @@
 
             <div class="form-group">
                 <label for="synopsis">Synopsis</label>
-                <textarea
-                    form ="_addBook-form" 
-                    name="synopsis" 
-                    id="_synopsis" 
-                    wrap="soft"></textarea>
+                <textarea form="_addBook-form" name="synopsis" id="_synopsis" wrap="soft"></textarea>
             </div>
 
             <div class="input-group">
                 <div class="form-group">
                     <label for="stock">Stock</label>
-                    <input 
-                        type="number"
-                        min="0" 
-                        name="stock" 
-                        id="_stock" 
-                        class="form-control" 
-                        required>
+                    <input type="number" min="0" name="stock" id="_stock" class="form-control" required>
                 </div>
                 <div class="form-group">
                     <label for="image">Upload Image</label>
@@ -208,10 +178,9 @@
                 <button type="submit" class="btn btn-primary">Add Book</button>
             </div>
         </form>
-
-
     </div>
 </div>
+
 
 <div class="success-modal-bg">
     <div class="success-modal">

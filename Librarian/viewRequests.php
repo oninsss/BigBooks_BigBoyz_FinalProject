@@ -20,7 +20,6 @@ include "../database.php";
                     </div>
                     <div class="filter">
                         <select name="request-filter" id="_request-filter">
-                            <option value="">All Requests</option>
                             <option value="borrow-requests" <?php if (isset($_GET['request-filter']) && $_GET['request-filter'] == 'borrow-requests') echo 'selected'; ?>>Borrow Requests</option>
                             <option value="return-requests" <?php if (isset($_GET['request-filter']) && $_GET['request-filter'] == 'return-requests') echo 'selected'; ?>>Return Requests</option>
                             <option value="payment-requests" <?php if (isset($_GET['request-filter']) && $_GET['request-filter'] == 'payment-requests') echo 'selected'; ?>>Payment Requests</option>
@@ -36,13 +35,6 @@ include "../database.php";
                 <?php
                 $requestFilter = isset($_GET['request-filter']) ? $_GET['request-filter'] : '';
                 switch($requestFilter) {
-                    case 'borrow-requests':
-                        echo "<th>Borrow ID</th>";
-                        echo "<th>Book ID</th>";
-                        echo "<th>Borrowed by</th>";
-                        echo "<th>Borrow Date</th>";
-                        echo "<th>Actions</th>";
-                        break;
                     case 'return-requests':
                         echo "<th>Return ID</th>";
                         echo "<th>Book ID</th>";
@@ -59,12 +51,10 @@ include "../database.php";
                         echo "<th>Actions</th>";
                         break;
                     default:
-                        echo "<th>Transaction ID</th>";
+                        echo "<th>Borrow ID</th>";
                         echo "<th>Book ID</th>";
                         echo "<th>Borrowed by</th>";
-                        echo "<th>Approved by</th>";
                         echo "<th>Borrow Date</th>";
-                        echo "<th>Return Date</th>";
                         echo "<th>Actions</th>";
                         break;
                 }
@@ -76,10 +66,6 @@ include "../database.php";
     <table class="request-list">
         <?php
         switch ($requestFilter) {
-            case 'borrow-requests':
-                $requests = "SELECT * FROM borrow_books_transactions 
-                                        WHERE b_status = 'Pending'";
-                break;
             case 'return-requests':
                 $requests = "SELECT * FROM returned_books_transactions 
                                         WHERE b_status = 'Pending'";
@@ -88,8 +74,9 @@ include "../database.php";
                 $requests = "";
                 break;
             default:
-                $requests = "SELECT * FROM borrow_books_transactions";
-                break;
+            $requests = "SELECT * FROM borrow_books_transactions 
+                        WHERE b_status = 'Pending'";
+            break;
         }
 
         if (isset($_GET['search']) && !empty($_GET['search'])) {
@@ -126,7 +113,7 @@ include "../database.php";
                         echo "<td>" . $row['date_returned'] . "</td>";
                         echo "<td>
                                 <div class='btnGrp'>
-                                    <button class='positiveBtn' onclick='openApproveModal(\"" . $row['transaction_id'] . "\")'>Approve</button>
+                                    <button class='positiveBtn' onclick='openApproveReturnModal(\"" . $row['transaction_id'] . "\")'>Approve</button>
                                 </div>
                             </td>";
                         break;
@@ -136,12 +123,11 @@ include "../database.php";
                         echo "<td>" . $row['transaction_id'] . "</td>";
                         echo "<td>" . $row['book_id'] . "</td>";
                         echo "<td>" . $row['borrowed_by'] . "</td>";
-                        echo "<td>" . "Pending" . "</td>";
                         echo "<td>" . $row['b_start_date'] . "</td>";
-                        echo "<td>" . $row['b_end_date'] . "</td>";
                         echo "<td>
                                 <div class='btnGrp'>
                                     <button class='positiveBtn' onclick='openApproveModal(\"" . $row['transaction_id'] . "\")'>Approve</button>
+                                    <button class='negativeBtn' onclick='openRejectModal(\"" . $row['transaction_id'] . "\")'>Reject</button>
                                 </div>
                             </td>";
                         break;
@@ -164,7 +150,7 @@ include "../database.php";
             <p>Are you sure you want to approve this request?</p>
         </div>
         <div class="modal-footer">
-            <form method="POST" action="updateRequest.php">
+            <form method="POST" action="approveBorrow.php">
                 <input type="hidden" name="request_id" id="approve-request-id">
                 <input type="hidden" name="status" value="Approved">
                 <button type="submit" class="positiveBtn">Approve</button>
@@ -183,10 +169,29 @@ include "../database.php";
             <p>Are you sure you want to reject this request?</p>
         </div>
         <div class="modal-footer">
-            <form method="POST" action="updateRequest.php">
+            <form method="POST" action="approveBorrow.php">
                 <input type="hidden" name="request_id" id="reject-request-id">
                 <input type="hidden" name="status" value="Rejected">
                 <button type="submit" class="negativeBtn">Reject</button>
+            </form>
+            <button class="close-modal">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<div class="approve-return-modal-bg" style="display: none;">
+    <div class="approve-modal">
+        <div class="modal-header">
+            <h2>Approve Request</h2>
+        </div>
+        <div class="modal-body">
+            <p>Are you sure you want to approve this request?</p>
+        </div>
+        <div class="modal-footer">
+            <form method="POST" action="approveReturn.php">
+                <input type="hidden" name="transaction_id" id="approve-return-request-id"> <!-- Change name to "transaction_id" -->
+                <input type="hidden" name="status" value="Approved">
+                <button type="submit" class="positiveBtn">Approve</button>
             </form>
             <button class="close-modal">Cancel</button>
         </div>
@@ -204,12 +209,18 @@ include "../database.php";
         document.querySelector('.reject-modal-bg').style.display = 'flex';
     }
 
+    function openApproveReturnModal(transactionId) {
+        document.getElementById('approve-return-request-id').value = transactionId; <!-- Change ID to match the hidden input ID -->
+        document.querySelector('.approve-return-modal-bg').style.display = 'flex';
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
         const closeModalButtons = document.querySelectorAll('.close-modal');
         closeModalButtons.forEach(button => {
             button.addEventListener('click', () => {
                 document.querySelector('.approve-modal-bg').style.display = 'none';
                 document.querySelector('.reject-modal-bg').style.display = 'none';
+                document.querySelector('.approve-return-modal-bg').style.display = 'none';
             });
         });
     });

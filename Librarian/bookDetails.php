@@ -44,7 +44,7 @@
             <div class="details-body">
                 <div class="left">
                     <div class="imgBx">
-                        <img src="<?php echo $book['image']; ?>" alt="Book Image">
+                        <img src="../BookCovers/<?php echo $book['image']; ?>" alt="Book Image">
                     </div>
                 </div>
 
@@ -142,7 +142,7 @@
             </button>
         </div>
 
-        <form id="_editBook-form" action="BookActions/editBook.php" method="POST">
+        <form id="_editBook-form" action="BookActions/editBook.php" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="book_id" value="<?php echo $book_id; ?>">
             <div class="input-group">
                 <div class="form-group">
@@ -170,7 +170,7 @@
             </div>
             <div class="input-group">
                 <div class="form-group">
-                    <label for="category">Publish Date</label>
+                    <label for="publish_date">Publish Date</label>
                     <input 
                         type="date" 
                         name="publish_date" 
@@ -225,10 +225,11 @@
                     <input type="file" name="image" id="_image">
                 </div>
             </div>
-            <button type="submit" id="_editBookBtn"  class="btn-primary">Save Changes</button>
+            <button type="submit" id="_editBookBtn" class="btn-primary">Save Changes</button>
         </form>
     </div>
 </div>
+
 
 <div class="success-modal-bg">
     <div class="success-modal">

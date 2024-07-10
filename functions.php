@@ -93,29 +93,29 @@ function addBook(
 }
 
 function editBook(
-                $id, 
-                $name, 
-                $author, 
-                $category, 
-                $status, 
-                $stock, 
-                $publish_date ) {
+    $id, 
+    $name, 
+    $author, 
+    $category, 
+    $status, 
+    $stock, 
+    $publish_date, 
+    $image
+) {
     global $conn;
     $query = "UPDATE books SET 
-                    title = '$name', 
-                    author = '$author', 
-                    category = '$category', 
-                    book_status = '$status', 
-                    stock = '$stock', 
-                    publish_date = '$publish_date'
+                title = '$name', 
+                author = '$author', 
+                category = '$category', 
+                book_status = '$status', 
+                stock = '$stock', 
+                publish_date = '$publish_date', 
+                image = '$image'
             WHERE book_id = '$id'";
     $result = mysqli_query($conn, $query);
-    if ($result) {
-        return true;
-    } else {
-        return false;
-    }
+    return $result ? true : false;
 }
+
 
 function archiveBook($id) {
     global $conn;

@@ -11,7 +11,8 @@
 .success-modal-bg,
 .delete-modal-bg,
 .approve-modal-bg,
-.reject-modal-bg {
+.reject-modal-bg,
+.approve-return-modal-bg {
     position: fixed;
     top: 0;
     left: 0;

@@ -24,18 +24,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     # File Upload
     if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
         $image = $_FILES['image']['name'];
-        $target = "../BookCovers/" . basename($image);
+        $target = "../BookCovers/";
 
-        # Debugging statement
-        echo "Trying to upload image to: $target<br>";
-
-        if (!move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
+        if (!move_uploaded_file($_FILES['image']['tmp_name'], $target . $image)) {
             $errorMsg = "Failed to upload image!";
-            # Debugging statement
             echo "Error moving uploaded file. Check directory permissions.<br>";
-        } else {
-            echo "Image uploaded successfully to $target<br>";
-        }
+        } 
     } else {
         $image = "default.jpg";
         if (isset($_FILES['image']['error']) && $_FILES['image']['error'] !== UPLOAD_ERR_NO_FILE) {
