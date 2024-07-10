@@ -1,0 +1,162 @@
+
+
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+table th, table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+table th {
+    background-color: #555;
+    color: white;
+}
+
+table tbody tr:hover {
+    background-color: #f2f2f2;
+}
+
+table img {
+    max-width: 150px;
+    max-height: 150px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    align-self: center;
+}
+
+table td a {
+    color: #f5f5f5;
+    text-decoration: none;
+}
+
+table td button {
+
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+
+}
+
+table td button:hover {
+    background-color: #4CAF50;
+}
+
+table td button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.borrowedBooksCont{
+    display: flex;
+    margin-left: 50px;
+    width: calc(100vw - 410px);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.borrowedBooksCont .topPart{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-bottom: 20px;
+
+}
+
+.borrowedBooksCont .topPart h1{
+    font-size: 2rem;
+    font-weight: 600;
+    margin-top: 50px;
+}
+
+.borrowedBooksCont .topPart .searchAndFilter{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 50px;
+    gap: 20px;
+}
+
+.borrowedBooksContainer{
+    display: flex;
+    width: calc(100vw - 400px);
+    height: calc(100vh - 300px);
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    gap: 20px;
+}
+
+#searchBar{
+    height: 50px;
+    width: fit-content;
+    display: flex;
+    /* background-color: #fff; */
+    border-radius: 30px;
+    padding: 10px 10px;
+    align-items: center;
+    transition: all 0.8s ease-in-out;
+    
+}
+
+#searchBar:hover,
+#searchBar:focus-within{
+    background-color: #fff;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+#searchBar:hover input{
+    width: 400px;
+    padding: 10px;
+}
+
+#searchBar input{
+    width: 0;
+    outline: none;
+    border: none;
+    background: transparent;
+    transition: all 0.8s ease-in-out;
+}
+
+#searchBar input:focus,
+#searchBar:focus-within input{
+    width: 400px;
+    padding: 10px;
+}
+
+#searchBar input:focus > #searchBar{
+    background-color: #fff;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+#searchBarIcon{
+    padding: 0;
+    transition: all 0.8s ease-in-out;
+}
+
+.dropdown ul li{
+    font-size: 0.75rem;
+}

@@ -57,12 +57,16 @@
                 include 'borrowedBooks.php';
             } else if ($page == 'profile') {
                 include 'profile.php';
-            } else if ($page == 'viewRequests') {
-                include 'viewRequests.php';
+            } else if ($page == 'viewPayments') {
+                include 'viewPayments.php';
             } else if ($page == 'history') {
                 include 'history.php';
             } else if ($page == 'viewBooksDetails') {
                 include 'viewBooksDetails.php';
+            } else if ($page == 'payBalance') {
+                include 'payBalance.php';
+            } else if ($page == 'borrowTransaction') {
+                include 'borrowTransaction.php';
             }
             ?>
         </div>

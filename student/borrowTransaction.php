@@ -31,11 +31,13 @@
     $transaction_id = 'BB' . date('Y') . sprintf('%04d', $transactionsCount + 1 );
         
 
-    $sql = "INSERT INTO bigbooks.borrow_books_transactions (transaction_id, book_id, borrowed_by, title, author, b_start_date, b_end_date, b_status) VALUES ('$transaction_id','$book_id', '$student_id', '$title', '$author', '$start_date', '$end_date', '$status')";
+    $sql = "INSERT INTO bigbooks.borrow_books_transactions (transaction_id, book_id, borrowed_by, b_start_date, b_end_date, b_status) VALUES ('$transaction_id','$book_id', '$student_id', '$start_date', '$end_date', '$status')";
     if ($conn->query($sql) === TRUE) {
         echo "New record created successfully";
+        $_SESSION['borrow_success'] = true;
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
+        $_SESSION['borrow_success'] = false;
     }
 
     $reference_id = $transaction_id;
@@ -61,4 +63,5 @@
         echo "Error: " . $allTransactSql . "<br>" . $conn->error;
     }
 
+    $conn->close();
 ?>

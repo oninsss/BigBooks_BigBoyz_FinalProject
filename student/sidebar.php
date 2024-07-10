@@ -12,7 +12,7 @@ if (session_status() == PHP_SESSION_NONE) {
     <nav class="nav">
         <a href="index.php" class="logo">
             <img src="../Assets/Images/library-logo.png" alt="Logo">
-            <h1>Lorem Ipsum</h1>
+            <h1>Big Books</h1>
         </a>
         <ul>
             <li class="nav-item">
@@ -24,19 +24,19 @@ if (session_status() == PHP_SESSION_NONE) {
                 </a>
             </li>
             <li class="nav-item">
-                <a href="index.php?page=borrowBook">
+                <a href="index.php?page=borrowedBooks">
                     <span class="material-symbols-outlined">
-                        add_circle
+                        pending_actions
                     </span>
                     <span class="icon-text">Borrowed Book</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="index.php?page=viewRequests">
+                <a href="index.php?page=viewPayments">
                     <span class="material-symbols-outlined">
-                        pending_actions
+                        payments
                     </span>
-                    <span class="icon-text">View your requests</span>
+                    <span class="icon-text">Payments</span>
                 </a>
             </li>
             <li class="nav-item">

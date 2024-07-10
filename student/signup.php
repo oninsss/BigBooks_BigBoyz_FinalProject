@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signup</title>
-    <link rel="stylesheet" href="Assets/Style/login-signup.css">
+    <link rel="stylesheet" href="../Assets/Style/login-signup.css">
     <script src="./Assets/Script/validations.js"></script>
     <script>
         var check = function() {
@@ -48,6 +48,8 @@
             
             <input type="submit" value="Signup">
         </form>
+        <br><hr><br>
+        <p>Already have an account? <a href="login.php">Login</a></p>
     </div>
 </body>
 </html>
