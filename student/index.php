@@ -14,8 +14,8 @@
             box-sizing: border-box;
         }
         body, html {
-            background-color: #F3F2ED;
-            background: url('../Assets/Images/BigBooksLogo.png') no-repeat center center fixed;
+            background-color: #f5f5f5;
+            /* background: url('../Assets/Images/BigBooksLogo.png') no-repeat center center fixed; */
             font-family: 'Poppins', sans-serif;
             width: 100%;
             height: 100%;
@@ -91,7 +91,12 @@
                 include 'payBalance.php';
             } else if ($page == 'borrowTransaction') {
                 include 'borrowTransaction.php';
-            }
+            } else if ($page == 'returnTransaction') {
+                include 'returnTransaction.php';
+            } else if ($page == 'logout') {
+                include 'logout.php';
+            } else if ($page == 'welcomePage') {
+                include 'welcomePage.php';}
             ?>
         </div>
     </div>
