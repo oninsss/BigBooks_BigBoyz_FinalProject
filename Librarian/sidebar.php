@@ -5,28 +5,35 @@
 
     <nav class="nav">
         <ul>     
-            <a href="index.php?page=viewBooks&subPage=allBooks">
-                <li class="nav-item <?php echo ($_GET['page'] == 'viewBooks') ? 'active-page' : ''; ?>">
+            <a href="index.php?page=viewBooks">
+                <li class="nav-item <?php echo (isset($_GET['page']) && $_GET['page'] == 'viewBooks') ? 'active-page' : ''; ?>">
                     <span class="material-symbols-outlined">
                         library_books
                     </span>
                     <span class="icon-text">Books</span>
                 </li>
             </a>        
-            <a href="index.php?page=viewUsers&subPage=allUsers">
-                <li class="nav-item <?php echo ($_GET['page'] == 'viewUsers') ? 'active-page' : ''; ?>">
+            <a href="index.php?page=viewUsers">
+                <li class="nav-item <?php echo (isset($_GET['page']) && $_GET['page'] == 'viewUsers') ? 'active-page' : ''; ?>">
                     <span class="material-symbols-outlined">
                         person
                     </span>
                     <span class="icon-text">Students</span>
                 </li>
-            </a>       
-            <a href="index.php?page=history">
-                <li class="nav-item <?php echo ($_GET['page'] == 'history') ? 'active-page' : ''; ?>">
+            </a>
+            <a href="index.php?page=viewRequests">
+                <li class="nav-item <?php echo (isset($_GET['page']) && $_GET['page'] == 'viewRequests') ? 'active-page' : ''; ?>">
+                    <span class="material-symbols-outlined">
+                        sms
+                    </span>
+                    <span class="icon-text">Requests</span>
+                </li>     
+            <a href="index.php?page=viewTransactions">
+                <li class="nav-item <?php echo (isset($_GET['page']) && $_GET['page'] == 'viewTransactions') ? 'active-page' : ''; ?>">
                     <span class="material-symbols-outlined">
                         history
                     </span>
-                    <span class="icon-text">View History</span>
+                    <span class="icon-text">Transactions</span>
                 </li>
             </a>   
             <a href="../logout.php">
@@ -42,17 +49,16 @@
 </div>
 
 <script>
-    document.getElementById('_toggle-sidebar').addEventListener('click', function() {
-        var sidebar = document.getElementById('_sidebar');
-        sidebar.classList.toggle('hidden');
+    const toggleSidebar = document.getElementById('_toggle-sidebar');
+    const sidebar = document.getElementById('_sidebar');
+
+    toggleSidebar.addEventListener('click', () => {
+        sidebar.classList.toggle('active');
     });
 
-    window.addEventListener('resize', function() {
-        var sidebar = document.getElementById('_sidebar');
-        if (window.innerWidth > 768) {
-            sidebar.classList.remove('hidden');
-        } else {
-            sidebar.classList.add('hidden');
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 1024) {
+            sidebar.classList.remove('active');
         }
     });
 </script>

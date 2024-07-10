@@ -29,7 +29,21 @@
 <div class="container">
     <?php include 'sidebar.php'; ?>
 
-
+    <div class="main-content">
+        <h1><?php echo $user['first_name'] . ' ' . $user['last_name']; ?></h1>
+        <div class="book-details">
+            <div class="book-info">
+                <h2>User Information</h2>
+                <p><strong>User ID:</strong> <?php echo $user['user_id']; ?></p>
+                <p><strong>First Name:</strong> <?php echo $user['first_name']; ?></p>
+                <p><strong>Last Name:</strong> <?php echo $user['last_name']; ?></p>
+                <p><strong>Email:</strong> <?php echo $user['email']; ?></p>
+                <p><strong>Role:</strong> <?php echo $user['role']; ?></p>
+                <p><strong>Address:</strong> <?php echo $user['address']; ?></p>
+                <p><strong>Contact Number:</strong> <?php echo $user['contact_number']; ?></p>
+            </div>
+        </div>
+    </div>
 </div>
     
 </body>

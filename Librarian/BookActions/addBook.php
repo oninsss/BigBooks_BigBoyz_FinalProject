@@ -2,6 +2,8 @@
 include "../database.php";
 include "../functions.php";
 
+$addSuccess = false;
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $title = $_POST['title'];
     $author = $_POST['author'];
@@ -31,7 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $image = "default.jpg";
     }
     
-    addBook($title, $author, $publishDate, $category, $synopsis, $status, $stock, $image, $added_date);
-    
+    if (addBook($title, $author, $publishDate, $category, $synopsis, $status, $stock, $image, $added_date)) {
+        $addSuccess = true;
+    }
 }
 ?>

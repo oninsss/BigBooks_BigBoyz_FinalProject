@@ -22,12 +22,7 @@
             align-items: center;
             width: 100%;
             height: 100%;
-        }
-
-        .container {
-            display: flex;
-            width: 100%;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
         .main-content {
@@ -35,37 +30,34 @@
             overflow-y: auto; 
             height: 100vh;
         }
-
     </style>
-
 </head>
 <body>
-    <div class="container">  
-        <?php include 'sidebar.php'; ?>
-        <div class="main-content">
-
-            <?php
-            $page = $_GET['page'] ?? 'home';
+    <?php include 'sidebar.php'; ?>
+    <div class="main-content">
+        <?php
+            $page = $_GET['page'] ?? 'viewBooks';
 
             switch ($page) {
                 case 'viewBooks':
-                    $subPage = $_GET['subPage'] ?? 'allBooks'; 
-                    include "viewBooks.php"; 
+                    include 'viewBooks.php'; 
                     break;
                 case 'viewUsers':
-                    $subPage = $_GET['subPage'] ?? 'allUsers'; 
                     include 'viewUsers.php';
                     break;
-                case 'viewHistory':
-                    $subPage = $_GET['subPage'] ?? 'allHistory'; 
-                    include 'viewHistory.php';
+                case 'viewRequests':
+                    include 'viewRequests.php';
+                    break;
+                case 'viewTransactions':
+                    include 'viewTransactions.php';
                     break;
                 default:
                     echo '<div class="alert alert-info">Select a page to view.</div>';
                     break;
             }
-            ?>
-        </div>
+        ?>
     </div>
+
+    <script src="Assets/Script/sidebar.js"></script>
 </body>
 </html>

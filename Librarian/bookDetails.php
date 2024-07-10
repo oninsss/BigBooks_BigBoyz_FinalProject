@@ -37,7 +37,6 @@
                         <span class="material-symbols-outlined">
                             arrow_back
                         </span>
-                        <p>Back</p>
                     </a>
                 </button>
                 <h1>Book Details</h1>
@@ -79,21 +78,55 @@
                         </div>
                     </div>
 
+                    <?php
+                    $book_status = $book['status'];
+
+                    $archiveBtnText = $book_status === 'archive' ? 'Archived' : 'Archive';
+                    $archiveBtnClass = $book_status === 'archive' ? 'archived' : '';
+                    ?>
+
                     <div class="btnGrp">
-                        <form method="post" action="BookActions/archiveBook.php" style="display: inline;">
-                            <input type="hidden" name="book_id" value="<?php echo $book_id; ?>">
-                            <button type="submit" id="_archiveBtn">Archive</button>
-                        </form>
+                        <button id="_archiveBtn">
+                            <span class="material-symbols-outlined">
+                                archive
+                            </span>
+                            <?php echo $archiveBtnText; ?>
+                        </button>
 
-                        <button id="_editBtn">Edit</button>
+                        <button id="_editBtn">
+                            <span class="material-symbols-outlined">
+                                edit
+                            </span>
+                            Edit
+                        </button>
 
-                        <form method="post" action="BookActions/deleteBook.php" style="display: inline;">
-                            <input type="hidden" name="book_id" value="<?php echo $book_id; ?>">
-                            <button type="submit" id="_delBtn">Delete</button>
-                        </form>
+                        <button id="_delBtn">
+                            <span class="material-symbols-outlined">
+                                delete
+                            </span>
+                            Delete
+                        </button>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+<div class="archive-modal-bg">
+    <div class="archive-modal">
+        <div class="modal-header">
+            <h1>Confirm Archive</h1>
+        </div>
+        <div class="modal-body">
+            <p>Are you sure you want to archive this book?</p>
+        </div>
+        <div class="modal-footer">
+            <form method="post" action="BookActions/archiveBook.php">
+                <input type="hidden" name="book_id" value="<?php echo $book_id; ?>">
+                <button type="submit" id="_confirm-archive">Archive</button>
+            </form>
+            <button class="close-modal">Cancel</button>
         </div>
     </div>
 </div>
@@ -192,7 +225,7 @@
                     <input type="file" name="image" id="_image">
                 </div>
             </div>
-            <button type="submit" id="_editBookBtn">Save Changes</button>
+            <button type="submit" id="_editBookBtn"  class="btn-primary">Save Changes</button>
         </form>
     </div>
 </div>
@@ -210,14 +243,55 @@
     </div>
 </div>
 
+<div class="delete-modal-bg" style="display: none;">
+    <div class="delete-modal">
+        <div class="modal-header">
+            <h1>Confirm Deletion</h1>
+        </div>
+        <div class="modal-body">
+            <p>Are you sure you want to delete this book?</p>
+        </div>
+        <div class="modal-footer">
+            <form method="post" action="BookActions/deleteBook.php">
+                <input type="hidden" name="book_id" value="<?php echo $book_id; ?>">
+                <button type="submit" id="_confirm-delete">Delete</button>
+            </form>
+            <button class="close-modal">Cancel</button>
+        </div>
+    </div>
+</div>
+
 <script>
+document.getElementById('_archiveBtn').addEventListener('click', function() {
+    document.querySelector('.archive-modal-bg').style.display = 'flex';
+});
+
 document.getElementById('_editBtn').addEventListener('click', function() {
     document.querySelector('.edit-modal-bg').style.display = 'flex';
 });
 
-document.querySelector('.close-modal').addEventListener('click', function() {
-    document.querySelector('.edit-modal-bg').style.display = 'none';
+document.getElementById('_delBtn').addEventListener('click', function() {
+    document.querySelector('.delete-modal-bg').style.display = 'block';
 });
+
+document.querySelectorAll('.close-modal').forEach(function(element) {
+    element.addEventListener('click', function() {
+        document.querySelector('.archive-modal-bg').style.display = 'none';
+        document.querySelector('.edit-modal-bg').style.display = 'none';
+        document.querySelector('.delete-modal-bg').style.display = 'none';
+        document.querySelector('.success-modal-bg').style.display = 'none';
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    var today = new Date().toISOString().split('T')[0];
+    document.getElementById('_publish_date').setAttribute('max', today);
+});
+
+function showSuccessModal() {
+    var modal = document.querySelector(".success-modal-bg");
+    modal.style.display = "block";
+}
 
 document.getElementById('stock').addEventListener('input', function() {
     var stock = document.getElementById('stock').value;

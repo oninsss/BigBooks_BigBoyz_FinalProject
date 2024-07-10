@@ -35,7 +35,7 @@ function format_BookId(
                     $category, 
                     $count, 
                     $added_date) {
-    $id = strtoupper(substr($title, 0, 2))                                            # First 2 letters from the Book Title
+    $id = strtoupper(substr($title, 0, 2))                                  # First 2 letters from the Book Title
         . strtoupper(date('M', strtotime($publish_date)))                   # Month (published)
         . date('d', strtotime($added_date))                                 # Day (added to the system)
         . date('Y', strtotime($publish_date))                               # Year (published)
@@ -61,6 +61,7 @@ function addBook(
     $query = "SELECT * FROM books";
     $result = mysqli_query($conn, $query);
     $count = mysqli_num_rows($result);
+
     $count++;
     $book_id = format_BookId($title, $publish_date, $category, $count, $added_date);
     $query = "INSERT INTO books (

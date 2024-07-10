@@ -2,7 +2,7 @@
     position: sticky;
     top: 0;
     left: 0;
-    background-color: #F3F3F5;
+    background-color: #F3F2ED;
     width: 240px;
     min-height: 100vh;
     display: flex;
@@ -13,7 +13,7 @@
     transition: all 0.3s ease;
     overflow-x: hidden;
     overflow-y: auto;
-    
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .sidebar > a {
@@ -74,15 +74,12 @@
     span {
         color: #F3F2ED;
     }
-
 }
 
-@media (max-width: 768px) {
+
+
+@media (max-width: 1024px) {
     .sidebar {
         width: 0;
-    }
-
-    .toggle-sidebar-btn {
-        display: block;
     }
 }

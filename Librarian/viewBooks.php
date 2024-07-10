@@ -1,32 +1,54 @@
 <?php
     include "../database.php";
     include "BookActions/addBook.php";
-    $books = "SELECT * FROM books";
 ?>
 
 <div class="table-wrapper">
     <div class="header">
         <div class="titleBar">
+            <span class="material-symbols-outlined" id="_sidebar-toggle">
+                menu
+            </span>
             <h1>View Books</h1>
         </div>
         <div class="bottom">
             <div class="inner-nav">
-                <ul>
-                    <li class="<?php echo (isset($_GET['subPage']) && $_GET['subPage'] == 'allBooks') ? 'active-subPage' : ''; ?>">
-                        <a href="index.php?page=viewBooks&subPage=allBooks">All Books</a>
-                    </li>
-                    <li class="<?php echo (isset($_GET['subPage']) && $_GET['subPage'] == 'availableBooks') ? 'active-subPage' : ''; ?>">
-                        <a href="index.php?page=viewBooks&subPage=availableBooks">Available</a>
-                    </li>
-                    <li class="<?php echo (isset($_GET['subPage']) && $_GET['subPage'] == 'unavailableBooks') ? 'active-subPage' : ''; ?>">
-                        <a href="index.php?page=viewBooks&subPage=unavailableBooks">Unavailable</a>
-                    </li>
-                    <li class="<?php echo (isset($_GET['subPage']) && $_GET['subPage'] == 'archivedBooks') ? 'active-subPage' : ''; ?>">
-                        <a href="index.php?page=viewBooks&subPage=archivedBooks">Archived</a>
-                    </li>
-                </ul>
+                <form method="GET" action="index.php">
+                    <input type="hidden" name="page" value="viewBooks">
+                    <div class="searchBar">
+                        <input 
+                            type="text" 
+                            name="search" 
+                            value="<?php if(isset($_GET['search'])){echo $_GET['search']; } ?>" 
+                            placeholder="Search Record">
+                        <button type="submit" id="_search">
+                            <span class="material-symbols-outlined">search</span>
+                        </button>
+                    </div>
+                    <div class="filter">
+                        <select name="status-filter" id="_status-filter">
+                            <option value="">All Status</option>
+                            <option value="availableBooks" <?php if(isset($_GET['category-filter']) && $_GET['category-filter'] == 'availableBooks') echo 'selected'; ?>>Available</option>
+                            <option value="unavailableBooks" <?php if(isset($_GET['category-filter']) && $_GET['category-filter'] == 'unavailableBooks') echo 'selected'; ?>>Unavailable</option>
+                            <option value="archivedBooks" <?php if(isset($_GET['category-filter']) && $_GET['category-filter'] == 'archivedBooks') echo 'selected'; ?>>Archived</option>
+                        </select>
+                        <select name="category-filter" id="_category-filter">
+                            <option value="">All Categories</option>
+                            <option value="Fiction" <?php if(isset($_GET['status-filter']) && $_GET['status-filter'] == 'Fiction') echo 'selected'; ?>>Fiction</option>
+                            <option value="Non-Fiction" <?php if(isset($_GET['status-filter']) && $_GET['status-filter'] == 'Non-Fiction') echo 'selected'; ?>>Non-Fiction</option>
+                            <option value="Reference" <?php if(isset($_GET['status-filter']) && $_GET['status-filter'] == 'Reference') echo 'selected'; ?>>Reference</option>
+                            <option value="Educational" <?php if(isset($_GET['status-filter']) && $_GET['status-filter'] == 'Educational') echo 'selected'; ?>>Educational</option>
+                            <option value="Children" <?php if(isset($_GET['status-filter']) && $_GET['status-filter'] == 'Children') echo 'selected'; ?>>Children</option>
+                            <option value="Graphic Novel" <?php if(isset($_GET['status-filter']) && $_GET['status-filter'] == 'Graphic Novel') echo 'selected'; ?>>Graphic Novel</option>
+                            <option value="Drama" <?php if(isset($_GET['status-filter']) && $_GET['status-filter'] == 'Drama') echo 'selected'; ?>>Drama</option>
+                        </select>
+                        <button type="submit" id="_filter-btn">
+                            <p>Filter</p>
+                        </button>
+                    </div>
+                </form>
             </div>
-            <div class="btnGrp">
+            <div class="btnGrp">    
                 <button id="_addBook">Add Book</button>
             </div>
         </div>
@@ -45,36 +67,55 @@
 
     <table class="book-list">
         <?php
-        switch ($subPage) {
-            case 'allBooks':
-                include 'ViewBooks/allBooks.php'; 
-                break;
-            case 'availableBooks':
-                include 'ViewBooks/availBooks.php'; 
-                break;
-            case 'unavailableBooks':
-                include 'ViewBooks/unavailBooks.php'; 
-                break;
-            case 'archivedBooks':
-                include 'ViewBooks/archivedBooks.php'; 
-                break;
-            default:
-                echo '<tr><td colspan="7">Select a category to view books.</td></tr>';
-                break;
-        }
-        ?> 
+            $query = "SELECT * FROM books WHERE 1=1";
+
+            if (isset($_GET['search']) && !empty($_GET['search'])) {
+                $search = mysqli_real_escape_string($conn, $_GET['search']);
+                $query .= " AND (title LIKE '%$search%' OR author LIKE '%$search%')";
+            }
+
+            if (isset($_GET['status-filter']) && !empty($_GET['status-filter'])) {
+                $statusFilter = mysqli_real_escape_string($conn, $_GET['status-filter']);
+                if ($statusFilter == 'availableBooks') {
+                    $query .= " AND stock > 0 AND status = 'Available'";
+                } elseif ($statusFilter == 'unavailableBooks') {
+                    $query .= " AND stock = 0 AND status = 'Unavailable'";
+                } elseif ($statusFilter == 'archivedBooks') {
+                    $query .= " AND status = 'Archived'";
+                }
+            }
+
+            if (isset($_GET['category-filter']) && !empty($_GET['category-filter'])) {
+                $categoryFilter = mysqli_real_escape_string($conn, $_GET['category-filter']);
+                $query .= " AND category = '$categoryFilter'";
+            }
+
+            $result = mysqli_query($conn, $query);
+
+            if ($result && mysqli_num_rows($result) > 0) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    echo "<tr>";
+                    echo "<td>" . $row['book_id'] . "</td>";
+                    echo "<td>" . $row['title'] . "</td>";
+                    echo "<td>" . $row['category'] . "</td>";
+                    if ($row['status'] == 'Available') {
+                        echo "<td><span class='status-avail'>" . $row['status'] . "</span></td>";
+                    } elseif ($row['status'] == 'Unavailable') {
+                        echo "<td><span class='status-unavail'>" . $row['status'] . "</span></td>";
+                    } else {
+                        echo "<td><span class='status-archived'>" . $row['status'] . "</span></td>";
+                    }
+                    echo "<td>" . $row['stock'] . "</td>";
+                    echo "<td><a href='bookDetails.php?book_id=" . $row['book_id'] . "' class='moreBtn'><span class='material-symbols-outlined'>arrow_forward_ios</span></a></td>";
+                    echo "</tr>";
+                    
+                }
+            } else {
+                echo "<tr><td colspan='6'>No books found</td></tr>";
+            }
+        ?>
     </table>
 </div>
-
-<!-- <div class="pagination">
-    <ul>
-        <li><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
-    </ul>
-</div> -->
 
 <div class="addBook-modal-bg">
     <div class="addBook-modal">
@@ -88,7 +129,7 @@
         </div>
 
 
-        <form id="_addBook-form" action="index.php?page=viewBooks&subPage=allBooks" method="POST">
+        <form id="_addBook-form" action="index.php?page=viewBooks" method="POST">
             <div class="input-group">
                 <div class="form-group">
                     <label for="title">Title</label>
@@ -184,29 +225,32 @@
     </div>
 </div>
 
+
 <script>
-    document.getElementById('_addBook').addEventListener('click', function() {
-        document.querySelector('.addBook-modal-bg').style.display = 'flex';
-    });
+document.getElementById('_addBook').addEventListener('click', function() {
+    document.querySelector('.addBook-modal-bg').style.display = 'flex';
+});
 
-    document.querySelector('.close-modal').addEventListener('click', function() {
+var closeModalButtons = document.querySelectorAll('.close-modal');
+closeModalButtons.forEach(function(button) {
+    button.addEventListener('click', function() {
         document.querySelector('.addBook-modal-bg').style.display = 'none';
+        document.querySelector('.success-modal-bg').style.display = 'none';
     });
+});
 
-    <?php if ($result):
-    echo "
-        showSuccessModal();
-    ";
-    endif; ?>
+document.addEventListener('DOMContentLoaded', function() {
+    var today = new Date().toISOString().split('T')[0];
+    document.getElementById('_publishDate').setAttribute('max', today);
+});
 
-    function showSuccessModal() {
-        var modal = document.getElementById("success-modal-bg");
-        var span = document.querySelector(".close-modal");
+function showSuccessModal() {
+    var modal = document.querySelector(".success-modal-bg");
+    modal.style.display = "block";
+}
 
-        modal.style.display = "block";
+<?php if ($addSuccess): ?>
+showSuccessModal();
+<?php endif; ?>
 
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
-    }
 </script>

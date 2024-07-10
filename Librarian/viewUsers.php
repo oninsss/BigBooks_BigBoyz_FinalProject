@@ -1,20 +1,30 @@
 <?php
     include "../database.php";
-    $users = "SELECT * FROM users";
 ?>
 
 <div class="table-wrapper">
     <div class="header">
         <div class="titleBar">
-            <h1>View Users</h1>
+            <span class="material-symbols-outlined" id="_sidebar-toggle">
+                menu
+            </span>
+            <h1>View Students</h1>
         </div>
         <div class="bottom">
             <div class="inner-nav">
-                <ul>
-                    <li class="<?php echo (isset($_GET['subPage']) && $_GET['subPage'] == 'allUsers') ? 'active-subPage' : ''; ?>">
-                        <a href="index.php?page=viewUsers&subPage=allUsers">All Users</a>
-                    </li>
-                </ul>
+                <form method="GET" action="index.php">
+                <input type="hidden" name="page" value="viewUsers">
+                    <div class="searchBar">
+                        <input 
+                            type="text" 
+                            name="search" 
+                            value="<?php if(isset($_GET['search'])){echo htmlspecialchars($_GET['search']); } ?>" 
+                            placeholder="Search Student">
+                        <button type="submit" id="_search">
+                            <span class="material-symbols-outlined">search</span>
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
 
@@ -31,14 +41,34 @@
 
     <table class="student-list">
         <?php
-        switch ($subPage) {
-            case 'allUsers':
-                include 'ViewUsers/allUsers.php'; 
-                break;
-            default:
-                echo '<tr><td colspan="5">No users to view.</td></tr>';
-                break;
-        }
-        ?> 
+            $query = "SELECT * FROM users WHERE 1=1";
+
+            if (isset($_GET['search']) && !empty($_GET['search'])) {
+                $search = mysqli_real_escape_string($conn, $_GET['search']);
+                $query .= " AND (user_id LIKE '%$search%' OR last_name LIKE '%$search%' OR first_name LIKE '%$search%' OR email LIKE '%$search%')";
+            }
+
+            $result = mysqli_query($conn, $query);
+
+            if ($result && mysqli_num_rows($result) > 0) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    echo "<tr>";
+                        echo "<td>" . htmlspecialchars($row['user_id']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['last_name']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['first_name']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['email']) . "</td>";
+                        echo "<td>" . 
+                            '<a href="userDetails.php?user_id=' . htmlspecialchars($row['user_id']) . '" class="moreBtn">
+                                <span class="material-symbols-outlined">
+                                    arrow_forward_ios
+                                </span> 
+                            </a>' . 
+                        "</td>";
+                    echo "</tr>";
+                }
+            } else {
+                echo "<tr><td colspan='5'>No users found</td></tr>";
+            }
+        ?>
     </table>
 </div>
