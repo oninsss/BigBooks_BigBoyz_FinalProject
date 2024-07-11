@@ -30,8 +30,6 @@
                             <option value="">All Transactions</option>
                             <option value="borrowed" <?php if(isset($_GET['transaction-filter']) && $_GET['transaction-filter'] == 'borrowed') echo 'selected'; ?>>Borrowed Books</option>
                             <option value="returned" <?php if(isset($_GET['transaction-filter']) && $_GET['transaction-filter'] == 'returned') echo 'selected'; ?>>Returned Books</option>
-                            <option value="payments" <?php if(isset($_GET['transaction-filter']) && $_GET['transaction-filter'] == 'payments') echo 'selected'; ?>>Payments</option>
-                            <option value="cleared" <?php if(isset($_GET['transaction-filter']) && $_GET['transaction-filter'] == 'cleared') echo 'selected'; ?>>Cleared</option>
                         </select>
                         <button type="submit" id="_filter-btn">
                             <p>Filter</p>

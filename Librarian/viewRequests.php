@@ -22,7 +22,6 @@ include "../database.php";
                         <select name="request-filter" id="_request-filter">
                             <option value="borrow-requests" <?php if (isset($_GET['request-filter']) && $_GET['request-filter'] == 'borrow-requests') echo 'selected'; ?>>Borrow Requests</option>
                             <option value="return-requests" <?php if (isset($_GET['request-filter']) && $_GET['request-filter'] == 'return-requests') echo 'selected'; ?>>Return Requests</option>
-                            <option value="payment-requests" <?php if (isset($_GET['request-filter']) && $_GET['request-filter'] == 'payment-requests') echo 'selected'; ?>>Payment Requests</option>
                         </select>
                         <button type="submit" id="_filter-btn"><p>Filter</p></button>
                     </div>
