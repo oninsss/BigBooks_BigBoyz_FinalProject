@@ -1,6 +1,7 @@
 <div id="_sidebar" class="sidebar">
     <a href="index.php" class="logo">
-        <img src="../Assets/Images/library-logo.png" alt="Logo">
+        <img src="../Assets/Images/BigBooksLogo2.png" alt="Logo">
+        <h1>Big Books</h1>
     </a>
 
     <nav class="nav">

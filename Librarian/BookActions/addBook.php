@@ -40,6 +40,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (empty($errorMsg) && addBook($title, $author, $publishDate, $category, $synopsis, $status, $stock, $image, $added_date)) {
         $addSuccess = true;
+        header("Location: " . $_SERVER['PHP_SELF'] . "?modal=success");
+        exit;
     } else {
         if (empty($errorMsg)) {
             $errorMsg = "Failed to add book to the database!";
@@ -47,3 +49,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
+
+<!-- Your existing HTML code -->
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const modalParam = urlParams.get('modal');
+
+    if (modalParam === 'success') {
+        document.querySelector('.success-modal-bg').classList.add('active');
+    }
+
+    document.querySelector('.close-modal').addEventListener('click', function() {
+        document.querySelector('.success-modal-bg').classList.remove('active');
+    });
+});
+</script>
+
+<style>
+.success-modal-bg {
+    display: none;
+    /* other styles */
+}
+
+.success-modal-bg.active {
+    display: block;
+    /* other styles */
+}
+</style>
