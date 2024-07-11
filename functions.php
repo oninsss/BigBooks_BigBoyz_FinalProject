@@ -35,7 +35,7 @@ function format_BookId(
                     $category, 
                     $count, 
                     $added_date) {
-    $id = strtoupper(substr($title, 0, 2))                                            # First 2 letters from the Book Title
+    $id = strtoupper(substr($title, 0, 2))                                  # First 2 letters from the Book Title
         . strtoupper(date('M', strtotime($publish_date)))                   # Month (published)
         . date('d', strtotime($added_date))                                 # Day (added to the system)
         . date('Y', strtotime($publish_date))                               # Year (published)
@@ -61,6 +61,7 @@ function addBook(
     $query = "SELECT * FROM books";
     $result = mysqli_query($conn, $query);
     $count = mysqli_num_rows($result);
+
     $count++;
     $book_id = format_BookId($title, $publish_date, $category, $count, $added_date);
     $query = "INSERT INTO books (
@@ -70,7 +71,7 @@ function addBook(
                                 publish_date, 
                                 category, 
                                 synopsis, 
-                                status, 
+                                book_status, 
                                 stock, 
                                 image) 
               VALUES (
@@ -92,33 +93,33 @@ function addBook(
 }
 
 function editBook(
-                $id, 
-                $name, 
-                $author, 
-                $category, 
-                $status, 
-                $stock, 
-                $publish_date ) {
+    $id, 
+    $name, 
+    $author, 
+    $category, 
+    $status, 
+    $stock, 
+    $publish_date, 
+    $image
+) {
     global $conn;
     $query = "UPDATE books SET 
-                    title = '$name', 
-                    author = '$author', 
-                    category = '$category', 
-                    status = '$status', 
-                    stock = '$stock', 
-                    publish_date = '$publish_date'
+                title = '$name', 
+                author = '$author', 
+                category = '$category', 
+                book_status = '$status', 
+                stock = '$stock', 
+                publish_date = '$publish_date', 
+                image = '$image'
             WHERE book_id = '$id'";
     $result = mysqli_query($conn, $query);
-    if ($result) {
-        return true;
-    } else {
-        return false;
-    }
+    return $result ? true : false;
 }
+
 
 function archiveBook($id) {
     global $conn;
-    $query = "UPDATE books SET status = 'Archived' WHERE book_id = '$id'";
+    $query = "UPDATE books SET book_status = 'Archived' WHERE book_id = '$id'";
     $result = mysqli_query($conn, $query);
     if ($result) {
         return true;

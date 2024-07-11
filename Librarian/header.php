@@ -1,7 +1,7 @@
 <?php
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
+// if (session_status() == PHP_SESSION_NONE) {
+//     session_start();
+// }
 ?>
 <style>
 .topbar {
@@ -9,14 +9,14 @@ if (session_status() == PHP_SESSION_NONE) {
     top: 0;
     background-color: #F3F2ED;
     width: 100%;
-    height: 96px;
+    height: 72px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .topbar .nav {
-    width: 95%;
+    width: 92%;
     height: 100%;
     display: flex;
     justify-content: space-between;
@@ -59,7 +59,7 @@ h1 {
             <span class="material-symbols-outlined">menu</span>
         </button>
 
-        <h1>Lorem Ipsum</h1>
+        <h1>Librarian Dashboard</h1>
 
         <div class="profileBx">
             <!-- <img src="../Assets/Images/user.png" alt="Profile Picture">

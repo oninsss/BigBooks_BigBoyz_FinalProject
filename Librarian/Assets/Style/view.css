@@ -1,0 +1,411 @@
+.table-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    overflow-x: hidden;
+}
+
+.header {
+    top: 0;
+    position: sticky;
+    width: 100%;
+    background-color: #F3F2ED;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+    .titleBar {
+        width: 92%;
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        padding: 32px 0;
+
+        span {
+            border-radius: 8px;
+            margin-right: 32px;
+            padding: 4px 8px;
+            font-size: 2.5rem;
+            font-weight: 500;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s ease;
+
+            &:hover {
+                filter: brightness(1.1);
+            }
+        }
+    }
+
+    .bottom {
+        width: 92%;
+        height: 64px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        
+        .inner-nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+            form {
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                gap: 32px;
+        
+                .searchBar {
+                    display: flex;
+                    align-items: center;
+                    justify-content: start;
+        
+                    input {
+                        width: 100%;
+                        height: 24px;
+                        padding: 0.5rem;
+                        border: 1px solid #ccc;
+                        border-radius: 5px;
+                    }
+        
+                    #_search {
+                        height: 42px;
+                        border: 1px solid #ccc;
+                        border-radius: 5px;
+                        padding: 0.5rem;
+                        color: #333;
+                        cursor: pointer;
+                    }
+                }
+                .filter {
+                    min-width: 400px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: start;
+                    gap: 12px;
+        
+                    select {
+                        width: 100%;
+                        height: 42px;
+                        padding: 0.5rem; 
+                        border: 1px solid #ccc;
+                        border-radius: 5px;
+                    }
+
+                    #_filter-btn {
+                        height: 42px;
+                        border: 1px solid #ccc;
+                        border-radius: 5px;
+                        padding: 0.5rem 1.5rem;
+                        color: #333;
+                        font-weight: 500;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+
+        .btnGrp {
+            display: flex;
+            gap: 16px;
+
+            button {
+                padding: 12px 32px;
+                border: none;
+                border-radius: 8px;
+                font-size: 1rem;
+                font-weight: 500;
+                cursor: pointer;
+                transition: all 0.3s ease;
+
+                &:hover {
+                    filter: brightness(1.2);
+                }
+                &:active {
+                    transform: scale(0.95);
+                }
+            }
+
+            #_addBook {
+                background-color: #019F5E;
+                color: #F4F4F4;
+            }
+        }
+    }
+}
+
+.book-list-header,
+.student-list-header,
+.transactions-list-header,
+.request-list-header {
+    margin-top: 28px;
+}
+
+.book-list,
+.student-list,
+.transactions-list,
+.request-list {
+    margin-top: 16px;
+    border-spacing: 0 8px;
+    width: 100%;
+}
+
+.book-list-header, 
+.book-list {
+    width: 92%;
+
+    th:nth-child(1),
+    td:nth-child(1),
+    th:nth-child(2),
+    td:nth-child(2) {
+        width: 22%;
+    }
+    
+    th:nth-child(3),
+    td:nth-child(3),
+    th:nth-child(4),
+    td:nth-child(4) {
+        width: 15%;
+    }
+    
+    th:nth-child(5),
+    td:nth-child(5),
+    th:nth-child(6),
+    td:nth-child(6) {
+        width: 8%;
+    }
+}
+
+.student-list-header, 
+.student-list {
+    width: 92%;
+
+    th:nth-child(1),
+    td:nth-child(1) {
+        width: 15%;
+    }
+
+    th:nth-child(2),
+    td:nth-child(2),
+    th:nth-child(3),
+    td:nth-child(3) {
+        width: 25%;
+    }
+
+    th:nth-child(4),
+    td:nth-child(4) {
+        width: 20%;
+    }
+
+    th:nth-child(5),
+    td:nth-child(5) {
+        width: 15%;
+    }
+}
+
+.transactions-list-header,
+.transactions-list {
+    width: 92%;
+}
+
+.request-list-header,
+.request-list {
+    width: 92%;
+
+    th, td {
+        width: 20%;
+
+        &:last-child {
+            .btnGrp {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+    }
+}
+
+.book-list-header th,
+.student-list-header th,
+.transactions-list-header th,
+.request-list-header th {
+    white-space: nowrap;
+    background-color: #333;
+    padding: 12px 24px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+    color: #F4F4F4;
+    white-space: nowrap;
+    background-color: #333;
+    padding: 12px 24px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+    color: #F4F4F4;
+}
+
+.book-list td,
+.student-list td,
+.transactions-list td,
+.request-list td{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 16px 24px;
+    text-align: left;
+    background-color: #F4F4F4;
+}
+
+th:first-child, 
+td:first-child {
+  border-radius: 14px 0 0 14px;
+}
+
+th:last-child, 
+td:last-child {
+  border-radius: 0 14px 14px 0;
+}
+
+.status-avail {
+    color: #019F5E;
+}
+
+.status-unavail {
+    color: red;
+}
+
+.status-archived {
+    color: #E98947;
+}
+
+.active-subPage {
+    color: #333;
+    font-weight: 500;
+    border-bottom: 2px solid #333;
+}
+
+.moreBtn {
+    width: 40px;
+    height: 40px;
+    background-color: transparent;
+    border: none;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    
+    &:hover {
+        background-color: #EEE;
+        transform: scale(1.1);
+    }
+}
+
+.positiveBtn,
+.negativeBtn {
+    padding: 8px 24px;
+    border: none;
+    border-radius: 8px;
+    color: #F4F4F4;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+        filter: brightness(1.1);
+    }
+    &:active {
+        transform: scale(0.95);
+    }
+}
+
+.positiveBtn {
+    background-color: #019F5E;
+}
+
+.negativeBtn {
+    background-color: #DC3545;
+}
+
+.titleBar span {
+    display: none; 
+}
+
+.sidebar.active {
+    width: 240px;
+    z-index: 5;
+}
+
+
+@media (max-width: 1024px) {
+    .titleBar span {
+        display: block;
+    }
+}
+
+@media (max-width: 768px) {
+    .table-wrapper {
+        align-items: center;
+    }
+
+    .bottom {
+        margin-top: 64px;
+        flex-direction: column-reverse;
+        gap: 24px;
+
+        .inner-nav,
+        .btnGrp {
+            width: 100%;
+        }
+    }
+
+    .book-list,
+    .student-list,
+    .transactions-list,
+    .request-list {
+        td:nth-child(1),
+        td:nth-child(2),
+        td:nth-child(3),
+        td:nth-child(4),
+        td:nth-child(5),
+        td:nth-child(6) {
+            width: 92%;
+        }
+    }
+    th {
+        display: none;
+    }
+    td {
+        display: block;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    td::before {
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+    td:first-child {
+        background-color: #333;
+        color: #F4F4F4;
+        margin-top: 24px;
+        border-radius: 16px 16px 0 0;
+    }
+    td:last-child {
+        border-radius: 0 0 16px 16px;
+
+        .btnGrp {
+            display: flex;
+            flex-direction: row;
+            gap: 8px;
+        }
+    }
+}

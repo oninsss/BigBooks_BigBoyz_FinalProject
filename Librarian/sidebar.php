@@ -1,135 +1,64 @@
-<?php
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-?>
-
-<style>
-.sidebar {
-    position: sticky;
-    top: 0;
-    left: 0;
-    background-color: #F3F2ED;
-    width: 240px;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: center;
-    gap: 72px;
-    transition: all 0.3s ease;
-    overflow-y: auto;
-}
-
-.sidebar > a {
-    margin-top: 32px;
-}
-
-.sidebar > a img {
-    height: 50px;
-}
-
-.sidebar .nav {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.sidebar .nav ul {
-    display: flex;
-    flex-direction: column;
-    gap: 48px;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.sidebar .nav ul li {
-    width: 100%;
-}
-
-.sidebar .nav ul li a {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    text-decoration: none;
-    color: #333;
-    font-size: 1rem;
-    font-weight: 500;
-    transition: all 0.3s ease;
-}
-
-.sidebar .nav ul li a .icon-text {
-    display: inline;
-}
-
-@media (max-width: 768px) {
-    .sidebar {
-        display: none;
-    }
-
-    .toggle-sidebar-btn {
-        display: block;
-    }
-}
-</style>
-
 <div id="_sidebar" class="sidebar">
     <a href="index.php" class="logo">
         <img src="../Assets/Images/library-logo.png" alt="Logo">
     </a>
 
     <nav class="nav">
-        <ul>
-            <li class="nav-item">
-                <a href="index.php?page=viewBooks">
+        <ul>     
+            <a href="index.php?page=viewBooks">
+                <li class="nav-item <?php echo (isset($_GET['page']) && $_GET['page'] == 'viewBooks') ? 'active-page' : ''; ?>">
                     <span class="material-symbols-outlined">
                         library_books
                     </span>
-                    <span class="icon-text">View Books</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="index.php?page=viewUsers">
+                    <span class="icon-text">Books</span>
+                </li>
+            </a>        
+            <a href="index.php?page=viewUsers">
+                <li class="nav-item <?php echo (isset($_GET['page']) && $_GET['page'] == 'viewUsers') ? 'active-page' : ''; ?>">
                     <span class="material-symbols-outlined">
                         person
                     </span>
-                    <span class="icon-text">View Users</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="index.php?page=history">
+                    <span class="icon-text">Students</span>
+                </li>
+            </a>
+            <a href="index.php?page=viewRequests">
+                <li class="nav-item <?php echo (isset($_GET['page']) && $_GET['page'] == 'viewRequests') ? 'active-page' : ''; ?>">
+                    <span class="material-symbols-outlined">
+                        sms
+                    </span>
+                    <span class="icon-text">Requests</span>
+                </li>     
+            <a href="index.php?page=viewTransactions">
+                <li class="nav-item <?php echo (isset($_GET['page']) && $_GET['page'] == 'viewTransactions') ? 'active-page' : ''; ?>">
                     <span class="material-symbols-outlined">
                         history
                     </span>
-                    <span class="icon-text">View History</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="logout.php">
+                    <span class="icon-text">Transactions</span>
+                </li>
+            </a>   
+            <a href="logout.php">
+                <li class="nav-item">
                     <span class="material-symbols-outlined">
                         logout
                     </span>
                     <span class="icon-text">Logout</span>
-                </a>
-            </li>
+                </li>
+            </a>
         </ul>
     </nav>
 </div>
 
 <script>
-    document.getElementById('_toggle-sidebar').addEventListener('click', function() {
-        var sidebar = document.getElementById('_sidebar');
-        sidebar.classList.toggle('hidden');
+    const toggleSidebar = document.getElementById('_toggle-sidebar');
+    const sidebar = document.getElementById('_sidebar');
+
+    toggleSidebar.addEventListener('click', () => {
+        sidebar.classList.toggle('active');
     });
 
-    window.addEventListener('resize', function() {
-        var sidebar = document.getElementById('_sidebar');
-        if (window.innerWidth > 768) {
-            sidebar.classList.remove('hidden');
-        } else {
-            sidebar.classList.add('hidden');
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 1024) {
+            sidebar.classList.remove('active');
         }
     });
 </script>
