@@ -218,3 +218,13 @@ hr{
     width: 100%;
     border: 2px solid #000;
 }
+
+@media (max-width:769) {
+    .contBottomPart {
+        width: 350px;
+    }
+    
+    .bookscontainer {
+        width: 300px;
+    }
+}

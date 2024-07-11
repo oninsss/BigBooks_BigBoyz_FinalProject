@@ -17,24 +17,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         # Check if user exists
         $userAcc = "SELECT * FROM user_account WHERE email = '$email'";
         $result = mysqli_query($conn, $userAcc);
+        
 
         if (mysqli_num_rows($result) > 0) {
             $row = mysqli_fetch_assoc($result);
             $hashed_password = $row['hashed_password'];
+            $checkUserAcc = "SELECT user_id FROM user WHERE email = '$email' AND user_id LIKE 'STU%'";
+            
+            $result = mysqli_query($conn, $checkUserAcc);
 
-            # Verify password
-            if (password_verify($password, $hashed_password)) {
-                $_SESSION['email'] = $email;
-                $_SESSION['loggedin'] = true;
-
-                # Retrieve user_id
-                $getUserId = "SELECT user_id FROM user WHERE email = '$email'";
-                $result = mysqli_query($conn, $getUserId);
+            if (mysqli_num_rows($result) > 0) {
                 $row = mysqli_fetch_assoc($result);
+                $user_id = $row['user_id'];
+                # Verify password
+                if (password_verify($password, $hashed_password)) {
+                    $_SESSION['email'] = $email;
+                    $_SESSION['loggedin'] = true;
 
-                $_SESSION['student_id'] = $row['user_id']; // Use 'user_id' consistently
-                header('Location: index.php?page=welcomePage');
-                exit();
+                    # Retrieve user_id
+                    $getUserId = "SELECT user_id FROM user WHERE email = '$email'";
+                    $result = mysqli_query($conn, $getUserId);
+                    $row = mysqli_fetch_assoc($result);
+
+                    $_SESSION['student_id'] = $row['user_id']; // Use 'user_id' consistently
+                    header('Location: index.php?page=welcomePage');
+                    exit();
+            } else {
+                $message = "User not found";
+            }
+
+            $hashed_password = $row['hashed_password'];
+
+            
             } else {
                 $message = "Incorrect password";
             }
