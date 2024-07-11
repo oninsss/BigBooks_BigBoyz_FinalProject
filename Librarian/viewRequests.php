@@ -67,7 +67,7 @@ include "../database.php";
         <?php
         switch ($requestFilter) {
             case 'return-requests':
-                $requests = "SELECT * FROM returned_books_transactions 
+                $requests = "SELECT * FROM return_books_transactions 
                                         WHERE b_status = 'Pending'";
                 break;
             case 'payment-requests':

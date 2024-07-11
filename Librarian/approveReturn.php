@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $currentDate = date('Y-m-d');
 
         // Update returned_books_transactions table
-        $sql1 = "UPDATE returned_books_transactions SET 
+        $sql1 = "UPDATE return_books_transactions SET 
                     date_approved = '$currentDate', 
                     b_status = 'Cleared' 
                 WHERE transaction_id = '$transactionId'";
@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         //         WHERE transaction_id = '$transactionId'";
 
         // Fetch returned_by from returned_books_transactions
-        $sqlFetch = "SELECT returned_by FROM returned_books_transactions WHERE transaction_id = '$transactionId'";
+        $sqlFetch = "SELECT returned_by FROM return_books_transactions WHERE transaction_id = '$transactionId'";
         $result = $conn->query($sqlFetch);
         $row = $result->fetch_assoc();
         $returnedBy = $row['returned_by'];
