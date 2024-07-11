@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $row = mysqli_fetch_assoc($result);
 
                     $_SESSION['student_id'] = $row['user_id']; // Use 'user_id' consistently
-                    header('Location: index.php?page=welcomePage');
+                    header('Location: index.php?page=viewBooks');
                     exit();
             } else {
                 $message = "User not found";

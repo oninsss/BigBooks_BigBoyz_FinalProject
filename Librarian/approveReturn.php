@@ -7,16 +7,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $currentDate = date('Y-m-d');
 
         // Update the b_status to 'Cleared'
-        $sql = "UPDATE return_books_transactions SET 
-                    b_status = 'Cleared' 
-                WHERE transaction_id = '$transactionId'";
+        $sql = "UPDATE return_books_transactions SET b_status = 'Cleared' WHERE transaction_id = '$transactionId'";
 
-        // Fetch the returned_by field
-        $sqlFetch = "SELECT returned_by FROM return_books_transactions WHERE transaction_id = '$transactionId'";
+        // Fetch the returned_by and reference_id fields
+        $sqlFetch = "SELECT returned_by, reference_id FROM return_books_transactions WHERE transaction_id = '$transactionId'";
         $result = $conn->query($sqlFetch);
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $returnedBy = $row['returned_by'];
+            $referenceId = $row['reference_id'];
 
             // Execute the update query
             if ($conn->query($sql) === TRUE) {
@@ -33,13 +32,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $sqlInsert = "INSERT INTO all_transactions (transaction_id, reference_id, user_id, tr_date, purpose) 
                               VALUES ('$newTransactionId', '$transactionId', '$returnedBy', '$trDate', '$purpose')";
                 if ($conn->query($sqlInsert) === TRUE) {
-                    header("Location: ./index.php?page=viewRequests");
-                    exit();
+                    // Update the b_status to 'Cleared' in borrow_books_transactions
+                    $sqkUpdate = "UPDATE borrow_books_transactions SET b_status = 'Cleared' WHERE transaction_id = '$referenceId'";
+                    if ($conn->query($sqkUpdate) === TRUE) {
+                        header("Location: ./index.php?page=viewRequests");
+                        exit();
+                    } else {
+                        echo "Error updating borrow_books_transactions: " . $conn->error;
+                    }
                 } else {
                     echo "Error inserting record into all_transactions: " . $conn->error;
                 }
             } else {
-                echo "Error updating record: " . $conn->error;
+                echo "Error updating return_books_transactions: " . $conn->error;
             }
         } else {
             echo "Error: No record found with the given transaction_id.";

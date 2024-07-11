@@ -4,12 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
     <link rel="stylesheet" href="../Assets/Style/login-signup.css">
+    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
 </head>
 <body>
     <div class="container">
         <form action="login.php" method="post">
             <h1>Login to Account</h1>
+
+            <!-- Display error message -->
+            <?php if (!empty($message)) { ?>
+            <div class="alert alert-danger d-flex align-items-center" role="alert">
+                <div>
+                <p><?php echo $message; ?></p>
+                </div>
+                
+            </div>
+            <?php } ?>
 
             <div class="popup">
                 <p>
@@ -50,24 +63,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $userAcc = "SELECT * FROM user_account WHERE email = '$email'";
     $result = mysqli_query($conn, $userAcc);
 
-    # If user exists, check if password is correct
     if (mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_assoc($result);
         $hashed_password = $row['hashed_password'];
+        $checkUserAcc = "SELECT user_id FROM user WHERE email = '$email' AND user_id LIKE 'LIB%'";
+        
+        $result = mysqli_query($conn, $checkUserAcc);
 
-        if (password_verify($password, $hashed_password)) {
-            $_SESSION['email'] = $email;
-            session_start();
-            $_SESSION['loggedin'] = true;
-
-            $getUserId = "SELECT user_id FROM user WHERE email = '$email'";
-            $result = mysqli_query($conn, $getUserId);
+        if (mysqli_num_rows($result) > 0) {
             $row = mysqli_fetch_assoc($result);
-            
+            $user_id = $row['user_id'];
+            # Verify password
+            if (password_verify($password, $hashed_password)) {
+                $_SESSION['email'] = $email;
+                $_SESSION['loggedin'] = true;
 
-            $_SESSION['student_id'] = $row['user_id'];
-            header('Location: index.php');
-            exit();
+                # Retrieve user_id
+                $getUserId = "SELECT user_id FROM user WHERE email = '$email'";
+                $result = mysqli_query($conn, $getUserId);
+                $row = mysqli_fetch_assoc($result);
+
+                $_SESSION['student_id'] = $row['user_id']; // Use 'user_id' consistently
+                header('Location: index.php?page=viewBooks');
+                exit();
+        } else {
+            $message = "User not found";
+        }
+
+        $hashed_password = $row['hashed_password'];
+
+        
         } else {
             $message = "Incorrect password";
         }

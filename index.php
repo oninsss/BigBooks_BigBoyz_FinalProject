@@ -36,7 +36,18 @@ Account (Student) -->
     <style>
         body {
             background-color: #f5f5f5;
+            background: url('https://images.unsplash.com/photo-1501168025369-84d106f7a5eb?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center fixed;
         }
+
+        .darkFade{
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
         .container {
             display: flex;
             justify-content: center;
@@ -50,7 +61,7 @@ Account (Student) -->
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             background-color: #fff;
-            background-color: #1d1d1f;
+            background-color: rgba(255,255,255, 0.75);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -98,10 +109,13 @@ Account (Student) -->
     </style>
 </head>
 <body>
+    <div class="darkFade">
+
+    </div>
     <div class="container">
         <div class="card">
             <div class="topPart">
-                <img src="./Assets/Images/BigBooksLogo2.png" alt="">
+                <img src="./Assets/Images/BigBooksLogo.png" alt="">
             </div>
             <div class="bottomPart">
                 <buttons>
