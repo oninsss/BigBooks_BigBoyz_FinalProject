@@ -13,9 +13,9 @@ if (empty($book_id)) {
 }
 
 function hasPendingRequest($bookId, $conn) {
-    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM borrow_books_transactions WHERE book_id = ? AND b_status = 'Pending'");
+    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM borrow_books_transactions WHERE book_id = ? AND b_status = 'Pending' AND borrowed_by = ?");
     if ($stmt) {
-        $stmt->bind_param("s", $bookId);
+        $stmt->bind_param("ss", $bookId, $_SESSION['student_id']);
         $stmt->execute();
         $result = $stmt->get_result();
         $row = $result->fetch_assoc();
@@ -25,9 +25,9 @@ function hasPendingRequest($bookId, $conn) {
 }
 
 function bookApproved($bookId, $conn) {
-    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM borrow_books_transactions WHERE book_id = ? AND b_status = 'Approved'");
+    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM borrow_books_transactions WHERE book_id = ? AND b_status = 'Approved' AND borrowed_by = ?");
     if ($stmt) {
-        $stmt->bind_param("s", $bookId);
+        $stmt->bind_param("ss", $bookId, $_SESSION['student_id']);
         $stmt->execute();
         $result = $stmt->get_result();
         $row = $result->fetch_assoc();
@@ -118,7 +118,7 @@ $db_synopsis = $row['synopsis'];
                                 echo '<button class="btn btn-secondary" disabled>Pending Request</button>';
                             } else if (bookApproved($db_book_id, $conn)) {
                                 echo '<button class="btn btn-secondary" disabled>Book Borrowed</button>';
-                            } else if (!canBorrowBook($db_book_id, 'STUD0001', $conn)) {
+                            } else if (!canBorrowBook($db_book_id, $_SESSION['student_id'], $conn)) {
                                 echo '<button class="btn btn-secondary" disabled>Maximum Borrowed Books Reached</button>';
                             } else {
                                 echo '<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#' . 'modal' . $db_book_id . '">Borrow</button>';

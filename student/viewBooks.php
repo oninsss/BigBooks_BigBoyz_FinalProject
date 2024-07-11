@@ -12,9 +12,9 @@ if (!isset($_SESSION['student_id'])) {
 include_once '../database.php';
 
 function hasPendingRequest($bookId, $conn) {
-    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM borrow_books_transactions WHERE book_id = ? AND b_status = 'Pending'");
+    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM borrow_books_transactions WHERE book_id = ? AND b_status = 'Pending' AND borrowed_by = ?");
     if ($stmt) {
-        $stmt->bind_param("s", $bookId);
+        $stmt->bind_param("ss", $bookId, $_SESSION['student_id']);
         $stmt->execute();
         $result = $stmt->get_result();
         
@@ -29,9 +29,9 @@ function hasPendingRequest($bookId, $conn) {
 }
 
 function bookApproved($bookId, $conn) {
-    $stmt = $conn->prepare("SELECT b_status FROM borrow_books_transactions WHERE book_id = ? AND b_status = 'Approved'");
+    $stmt = $conn->prepare("SELECT b_status FROM borrow_books_transactions WHERE book_id = ? AND b_status = 'Approved' AND borrowed_by = ?");
     if ($stmt) {
-        $stmt->bind_param("s", $bookId);
+        $stmt->bind_param("ss", $bookId, $_SESSION['student_id']);
         $stmt->execute();
         $result = $stmt->get_result();
         

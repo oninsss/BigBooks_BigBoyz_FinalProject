@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $result = mysqli_query($conn, $getUserId);
                 $row = mysqli_fetch_assoc($result);
 
-                $_SESSION['user_id'] = $row['user_id']; // Use 'user_id' consistently
+                $_SESSION['student_id'] = $row['user_id']; // Use 'user_id' consistently
                 header('Location: index.php?page=welcomePage');
                 exit();
             } else {
@@ -62,12 +62,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <h1>Login to Account</h1>
 
             <!-- Display error message -->
+            <?php if (!empty($message)) { ?>
             <div class="alert alert-danger d-flex align-items-center" role="alert">
                 <div>
                 <p><?php echo $message; ?></p>
                 </div>
                 
             </div>
+            <?php } ?>
 
             <input type="email" name="email" placeholder="Email" required>
             <input type="password" name="password" placeholder="Password" required>
